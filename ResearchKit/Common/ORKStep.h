@@ -31,7 +31,9 @@
 
 @import Foundation;
 @import UIKit;
+#if HEALTH
 @import HealthKit;
+#endif
 #import <ResearchKit/ORKTypes.h>
 
 
@@ -169,7 +171,7 @@ ORK_CLASS_AVAILABLE
 /**
  Array of `ORKBodyItem` type items to display textual info.
  */
-@property (nonatomic) NSArray<ORKBodyItem *> *bodyItems;
+@property (nonatomic, nullable) NSArray<ORKBodyItem *> *bodyItems;
 
 /**
  An 'NSTextAlignment' that controls the text alignment for text bodyItems.
@@ -191,6 +193,7 @@ ORK_CLASS_AVAILABLE
  in order to include disclaimer, copyright, etc. that is important to display in the step but
  should not distract from the main purpose of the step.
  */
+
 @property (nonatomic, copy, nullable) NSString *footnote;
 
 /**
@@ -267,7 +270,9 @@ Whether to show progress for this step when it is presented. The default is YES.
  By default, the property scans the recorders and collates the HealthKit
  types the recorders require. Subclasses may override this implementation.
  */
+#if HEALTH
 @property (nonatomic, readonly, nullable) NSSet<HKObjectType *> *requestedHealthKitTypesForReading;
+#endif
 
 /**
  Checks the parameters of the step and throws exceptions on invalid parameters.

@@ -37,7 +37,8 @@
 #import "AVFoundation/AVFoundation.h"
 #import <AVKit/AVKit.h>
 #import "ORKHelpers_Internal.h"
-
+#import "ORKStepContentView.h"
+#import "ORKStepContentView_Private.h"
 
 @interface ORKRateObservedPlayer : AVPlayer
 

@@ -131,6 +131,7 @@ typedef void (^_ORKLocationAuthorizationRequestHandler)(BOOL success);
 
 @end
 
+
 @interface ORKTaskViewController () <ORKTaskReviewViewControllerDelegate, UINavigationControllerDelegate> {
     NSMutableDictionary *_managedResults;
     NSMutableArray *_managedStepIdentifiers;
@@ -139,8 +140,10 @@ typedef void (^_ORKLocationAuthorizationRequestHandler)(BOOL success);
     BOOL _hasRequestedHealthData;
     BOOL _saveable;
     ORKPermissionMask _grantedPermissions;
-    NSSet<HKObjectType *> *_requestedHealthTypesForRead;
-    NSSet<HKObjectType *> *_requestedHealthTypesForWrite;
+#if HEALTH
+     NSSet<HKObjectType *> *_requestedHealthTypesForRead;
+     NSSet<HKObjectType *> *_requestedHealthTypesForWrite;
+#endif
     NSURL *_outputDirectory;
     
     NSDate *_presentedDate;
@@ -241,7 +244,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     return [self commonInitWithTask:task taskRunUUID:taskRunUUID];
 }
 
-- (instancetype)initWithTask:(id<ORKTask>)task restorationData:(nullable NSData *)data delegate:(id<ORKTaskViewControllerDelegate>)delegate error:(NSError* __autoreleasing *)errorOut {
+- (instancetype)initWithTask:(id<ORKTask>)task restorationData:(NSData *)data delegate:(id<ORKTaskViewControllerDelegate>)delegate error:(NSError* __autoreleasing *)errorOut {
     
     self = [self initWithTask:task taskRunUUID:nil];
     
@@ -262,7 +265,6 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
 }
 
 - (instancetype)initWithTask:(id<ORKTask>)task
-      startingStepIdentifier:(NSString *)startingStepIdentifier
                ongoingResult:(nullable ORKTaskResult *)ongoingResult
          defaultResultSource:(nullable id<ORKTaskResultSource>)defaultResultSource
                     delegate:(id<ORKTaskViewControllerDelegate>)delegate {
@@ -274,12 +276,14 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
         _defaultResultSource = defaultResultSource;
         if (ongoingResult != nil) {
             for (ORKResult *stepResult in ongoingResult.results) {
-                [_managedStepIdentifiers addObject:stepResult.identifier];
-                _managedResults[stepResult.identifier] = stepResult;
+                NSString *stepResultIdentifier = stepResult.identifier;
+                if ([task stepWithIdentifier:stepResultIdentifier] == nil) {
+                    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"ongoingResults has results for identifiers not found within the task steps" userInfo:nil];
+                }
+                [_managedStepIdentifiers addObject:stepResultIdentifier];
+                _managedResults[stepResultIdentifier] = stepResult;
             }
-        }
-        if (startingStepIdentifier != nil) {
-            _restoredStepIdentifier = startingStepIdentifier;
+            _restoredStepIdentifier = ongoingResult.results.lastObject.identifier;
         }
     }
     return self;
@@ -326,6 +330,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
                                    writeTypes:(NSSet *)writeTypes
                                       handler:(void (^)(void))handler {
     NSParameterAssert(handler != nil);
+#if HEALTH
     if ((![HKHealthStore isHealthDataAvailable]) || (!readTypes && !writeTypes)) {
         _requestedHealthTypesForRead = nil;
         _requestedHealthTypesForWrite = nil;
@@ -335,7 +340,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     
     _requestedHealthTypesForRead = readTypes;
     _requestedHealthTypesForWrite = writeTypes;
-    
+
     __block HKHealthStore *healthStore = [HKHealthStore new];
     [healthStore requestAuthorizationToShareTypes:writeTypes readTypes:readTypes completion:^(BOOL success, NSError *error) {
         ORK_Log_Error("Health access: error=%@", error);
@@ -344,6 +349,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
         // Clear self-ref.
         healthStore = nil;
     }];
+#endif
 }
 
 - (void)requestPedometerAccessWithHandler:(void (^)(BOOL success))handler {
@@ -430,15 +436,17 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     }
     
     NSSet *readTypes = nil;
+#if HEALTH
     if ([self.task respondsToSelector:@selector(requestedHealthKitTypesForReading)]) {
         readTypes = [self.task requestedHealthKitTypesForReading];
     }
-    
+#endif
     NSSet *writeTypes = nil;
+#if HEALTH
     if ([self.task respondsToSelector:@selector(requestedHealthKitTypesForWriting)]) {
         writeTypes = [self.task requestedHealthKitTypesForWriting];
     }
-    
+#endif
     ORKPermissionMask permissions = [self desiredPermissions];
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -581,6 +589,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     }
 }
 
+#if HEALTH
 - (NSSet<HKObjectType *> *)requestedHealthTypesForRead {
     return _requestedHealthTypesForRead;
 }
@@ -588,6 +597,7 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
 - (NSSet<HKObjectType *> *)requestedHealthTypesForWrite {
     return _requestedHealthTypesForWrite;
 }
+#endif
 
 - (void)loadView {
     self.view = [[UIView alloc] initWithFrame:CGRectZero];
@@ -646,6 +656,10 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     if (_taskReviewViewController) {
         [_childNavigationController setViewControllers:@[_taskReviewViewController] animated:NO];
         [self setTaskReviewViewControllerNavbar];
+    }
+    
+    if (_currentStepViewController) {
+        [self setUpProgressLabelForStepViewController:_currentStepViewController];
     }
 }
 
@@ -1167,7 +1181,6 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-
     if (self.discardable) {
         [self finishWithReason:ORKTaskViewControllerFinishReasonDiscarded error:nil];
     } else {
@@ -1265,23 +1278,22 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
 }
 
 - (void)flipToFirstPage {
-    if ([self.task isKindOfClass:[ORKOrderedTask class]]) {
-        ORKOrderedTask *orderedTask = (ORKOrderedTask *)self.task;
-        ORKStep *firstStep = [[orderedTask steps] firstObject];
-        if (firstStep) {
-            [_managedStepIdentifiers removeAllObjects];
-            [self showStepViewController:[self viewControllerForStep:firstStep] goForward:YES animated:NO];
-        }
+    ORKStep *firstStep = [_task stepAfterStep:nil withResult:[self result]];
+    if (firstStep) {
+        [self showStepViewController:[self viewControllerForStep:firstStep] goForward:YES animated:NO];
     }
 }
 
 - (void)flipToLastPage {
-    if ([self.task isKindOfClass:[ORKOrderedTask class]]) {
-        ORKOrderedTask *orderedTask = (ORKOrderedTask *)self.task;
-        ORKStep *lastStep = [[orderedTask steps] lastObject];
-        if (lastStep) {
-            [self showStepViewController:[self viewControllerForStep:lastStep] goForward:YES animated:YES];
-        }
+    ORKStep *initialCurrentStep = _currentStepViewController.step;
+    ORKStep *lastStep = nil;
+    ORKStep *nextStep = _currentStepViewController.step;
+    do {
+        lastStep = nextStep;
+        nextStep = [_task stepAfterStep:lastStep withResult:[self result]];
+    } while (nextStep != nil);
+    if (lastStep != initialCurrentStep) {
+        [self showStepViewController:[self viewControllerForStep:lastStep] goForward:YES animated:YES];
     }
 }
 
@@ -1309,6 +1321,29 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
             [self showStepViewController:stepViewController goForward:NO animated:animated];
         }
     }
+}
+
+- (void)flipToPageWithIdentifier:(NSString *)identifier forward:(BOOL)forward animated:(BOOL)animated
+{
+    NSUInteger index =
+    [[(ORKOrderedTask *)self.task steps] indexOfObjectPassingTest:^BOOL(ORKStep * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+    {
+            if ([obj.identifier isEqualToString:identifier])
+            {
+                *stop = YES;
+                return YES;
+            }
+            
+            return NO;
+    }];
+        
+        if (index == NSNotFound) { return; }
+        
+        ORKStep *step = [[(ORKOrderedTask *)self.task steps] objectAtIndex:index];
+        if (step)
+        {
+            [self showStepViewController:[self viewControllerForStep:step] goForward:forward animated:animated];
+        }
 }
 
 #pragma mark -  ORKStepViewControllerDelegate
@@ -1457,8 +1492,10 @@ static NSString *const _ORKProgressMode = @"progressMode";
     [coder encodeBool:self.discardable forKey:_ORKDiscardableTaskRestoreKey];
     [coder encodeObject:_managedResults forKey:_ORKManagedResultsRestoreKey];
     [coder encodeObject:_managedStepIdentifiers forKey:_ORKManagedStepIdentifiersRestoreKey];
+#if HEALTH
     [coder encodeObject:_requestedHealthTypesForRead forKey:_ORKRequestedHealthTypesForReadRestoreKey];
     [coder encodeObject:_requestedHealthTypesForWrite forKey:_ORKRequestedHealthTypesForWriteRestoreKey];
+#endif
     [coder encodeObject:_presentedDate forKey:_ORKPresentedDate];
     [coder encodeInteger:_progressMode forKey:_ORKProgressMode];
     [coder encodeObject:ORKBookmarkDataFromURL(_outputDirectory) forKey:_ORKOutputDirectoryRestoreKey];
@@ -1502,8 +1539,10 @@ static NSString *const _ORKProgressMode = @"progressMode";
         }
         
         if ([_task respondsToSelector:@selector(stepWithIdentifier:)]) {
+#if HEALTH
             _requestedHealthTypesForRead = [coder decodeObjectOfClass:[NSSet class] forKey:_ORKRequestedHealthTypesForReadRestoreKey];
             _requestedHealthTypesForWrite = [coder decodeObjectOfClass:[NSSet class] forKey:_ORKRequestedHealthTypesForWriteRestoreKey];
+#endif
             _presentedDate = [coder decodeObjectOfClass:[NSDate class] forKey:_ORKPresentedDate];
             _lastBeginningInstructionStepIdentifier = [coder decodeObjectOfClass:[NSString class] forKey:_ORKLastBeginningInstructionStepIdentifierKey];
             

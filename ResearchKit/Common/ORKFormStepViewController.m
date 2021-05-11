@@ -62,6 +62,10 @@
 #import "ORKHelpers_Internal.h"
 #import "ORKSkin.h"
 
+#if HEALTH
+#import <HealthKit/HealthKit.h>
+#endif
+
 static const CGFloat TableViewYOffsetStandard = 30.0;
 static const CGFloat DelayBeforeAutoScroll = 0.25;
 
@@ -315,12 +319,15 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     NSMutableArray<ORKTableSection *> *_sections;
     NSMutableSet *_answeredSections;
     BOOL _skipped;
+    BOOL _autoScrollCancelled;
     UITableViewCell *_currentFirstResponderCell;
     NSArray<NSLayoutConstraint *> *_constraints;
 }
 
 - (instancetype)ORKFormStepViewController_initWithResult:(ORKResult *)result {
+#if HEALTH
     _defaultSource = [ORKAnswerDefaultSource sourceWithHealthStore:[HKHealthStore new]];
+#endif
     if (result) {
         NSAssert([result isKindOfClass:[ORKStepResult class]], @"Expect a ORKStepResult instance");
 
@@ -363,16 +370,18 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     [super viewWillAppear:animated];
     [self updateAnsweredSections];
     NSMutableSet *types = [NSMutableSet set];
+#if HEALTH
     for (ORKFormItem *item in [self formItems]) {
-        ORKAnswerFormat *format = [item answerFormat];
-        HKObjectType *objType = [format healthKitObjectTypeForAuthorization];
+         ORKAnswerFormat *format = [item answerFormat];
+         HKObjectType *objType = [format healthKitObjectTypeForAuthorization];
         if (objType) {
             [types addObject:objType];
         }
     }
-    
+#endif
     BOOL refreshDefaultsPending = NO;
     if (types.count) {
+#if HEALTH
         NSSet<HKObjectType *> *alreadyRequested = [[self taskViewController] requestedHealthTypesForRead];
         if (![types isSubsetOfSet:alreadyRequested]) {
             refreshDefaultsPending = YES;
@@ -385,6 +394,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
                 });
             }];
         }
+#endif
     }
     if (!refreshDefaultsPending) {
         [self refreshDefaults];
@@ -407,6 +417,17 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
+    _autoScrollCancelled = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    _autoScrollCancelled = YES;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)updateAnsweredSections {
@@ -958,7 +979,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:0 inSection:(indexPath.section + 1)];
     ORKFormItemCell *nextCell = [self.tableView cellForRowAtIndexPath:nextIndexPath];
     
-    if ([nextCell respondsToSelector:@selector(formItem)]) {
+    if ([nextCell respondsToSelector:@selector(formItem)] && !_autoScrollCancelled) {
         ORKQuestionType type = nextCell.formItem.impliedAnswerFormat.questionType;
         if ([self doesTableCellTypeUseKeyboard:type] && [nextCell isKindOfClass:[ORKFormItemCell class]]) {
             return YES;

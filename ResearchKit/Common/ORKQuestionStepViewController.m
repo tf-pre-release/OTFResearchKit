@@ -137,6 +137,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     return self;
 }
 
+#if HEALTH
 - (instancetype)initWithStep:(ORKStep *)step {
     self = [super initWithStep:step];
     if (self) {
@@ -144,6 +145,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     }
     return self;
 }
+#endif
 
 - (void)stepDidChange {
     [super stepDidChange];
@@ -236,7 +238,6 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
             [_navigationFooterView updateContinueAndSkipEnabled];
             
             [self.view addSubview:_questionView];
-
             if (_customQuestionView) {
                 _questionView.questionCustomView = _customQuestionView;
                 _customQuestionView.delegate = self;
@@ -390,25 +391,28 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     
     
     NSMutableSet *types = [NSMutableSet set];
+#if HEALTH
     ORKAnswerFormat *format = [[self questionStep] answerFormat];
-    HKObjectType *objType = [format healthKitObjectTypeForAuthorization];
+     HKObjectType *objType = [format healthKitObjectTypeForAuthorization];
     if (objType) {
         [types addObject:objType];
     }
-    
+#endif
     BOOL scheduledRefresh = NO;
     if (types.count) {
-        NSSet<HKObjectType *> *alreadyRequested = [[self taskViewController] requestedHealthTypesForRead];
+#if HEALTH
+         NSSet<HKObjectType *> *alreadyRequested = [[self taskViewController] requestedHealthTypesForRead];
         if (![types isSubsetOfSet:alreadyRequested]) {
             scheduledRefresh = YES;
             [_defaultSource.healthStore requestAuthorizationToShareTypes:nil readTypes:types completion:^(BOOL success, NSError *error) {
                 if (success) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self refreshDefaults];
-                    });
+                   });
                 }
             }];
         }
+#endif
     }
     if (!scheduledRefresh) {
         [self refreshDefaults];
@@ -423,6 +427,11 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     if (_tableView) {
         [_tableView reloadData];
     }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)answerDidChange {
@@ -468,8 +477,6 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     _visible = YES;
     
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
-    // TODO: Remove reloadData later.
-    [_tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -514,6 +521,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     _navigationFooterView.continueButtonItem = continueButtonItem;
     [self updateButtonStates];
 }
+
 
 - (void)setSkipButtonItem:(UIBarButtonItem *)skipButtonItem {
     [super setSkipButtonItem:skipButtonItem];
