@@ -2,16 +2,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "ResearchKit",
+    name: "OTFResearchKit",
     platforms: [.iOS(.v13), .macOS(.v10_15)],
     products: [
         .library(
-            name: "ResearchKit",
-            targets: ["ResearchKit"])
+            name: "OTFResearchKit",
+            targets: ["OTFResearchKit"])
     ],
     targets: [
         .target(
-            name: "ResearchKit",
-            path: "ResearchKit")
+            name: "OTFResearchKit",
+            path: "OTFResearchKit")
     ]
 )
