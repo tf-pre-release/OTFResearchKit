@@ -1,6 +1,10 @@
 framework module OTFResearchKit {
     umbrella header "OTFResearchKit.h"
     
+    module Private {
+        export *
+    }
+    
     export *
     module * { export * }
 }
