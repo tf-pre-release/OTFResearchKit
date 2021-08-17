@@ -1293,6 +1293,7 @@
 		84F21F6C26CA2A4C0093255F /* ORKTimedWalkStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKTimedWalkStepViewController.h; sourceTree = "<group>"; };
 		84F21F6D26CA2A4C0093255F /* ORKTimedWalkStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKTimedWalkStep.m; sourceTree = "<group>"; };
 		84F21F6E26CA2A4C0093255F /* ORKTimedWalkStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKTimedWalkStep.h; sourceTree = "<group>"; };
+		84F21F7F26CBED260093255F /* OTFResearchKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = OTFResearchKit.modulemap; sourceTree = "<group>"; };
 		861610BF1A8D8EDD00245F7A /* Artwork.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Artwork.xcassets; sourceTree = "<group>"; };
 		861D11A71AA691BB003C98A7 /* ORKScaleSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKScaleSliderView.h; sourceTree = "<group>"; };
 		861D11A81AA691BB003C98A7 /* ORKScaleSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKScaleSliderView.m; sourceTree = "<group>"; };
@@ -2737,6 +2738,7 @@
 				861610BF1A8D8EDD00245F7A /* Artwork.xcassets */,
 				B1C0F4E01A9BA65F0022C153 /* Localized */,
 				86C40C101A8D7C5C00081FAC /* Info.plist */,
+				84F21F7F26CBED260093255F /* OTFResearchKit.modulemap */,
 			);
 			path = OTFResearchKit;
 			sourceTree = "<group>";
