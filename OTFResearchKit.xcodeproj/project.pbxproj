@@ -1621,7 +1621,6 @@
 		B11DF4C21AA10D70009E76D2 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/ResearchKit.strings; sourceTree = "<group>"; };
 		B14660481AA10DD7002F95C2 /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/ResearchKit.strings; sourceTree = "<group>"; };
 		B183A5951A8535D100C76870 /* OTFResearchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OTFResearchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B18AABE01A9F08D9003871B5 /* OTFResearchKit.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = OTFResearchKit.modulemap; sourceTree = "<group>"; };
 		B1A860DB1A9693C400EA57B7 /* consent_01@2x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_01@2x.m4v"; sourceTree = "<group>"; };
 		B1A860DC1A9693C400EA57B7 /* consent_02@2x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_02@2x.m4v"; sourceTree = "<group>"; };
 		B1A860DD1A9693C400EA57B7 /* consent_03@2x.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "consent_03@2x.m4v"; sourceTree = "<group>"; };
@@ -2738,7 +2737,6 @@
 				861610BF1A8D8EDD00245F7A /* Artwork.xcassets */,
 				B1C0F4E01A9BA65F0022C153 /* Localized */,
 				86C40C101A8D7C5C00081FAC /* Info.plist */,
-				B18AABE01A9F08D9003871B5 /* OTFResearchKit.modulemap */,
 			);
 			path = OTFResearchKit;
 			sourceTree = "<group>";
