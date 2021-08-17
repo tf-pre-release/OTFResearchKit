@@ -2701,14 +2701,6 @@
 			name = "WebView Step";
 			sourceTree = "<group>";
 		};
-		84DD8E0F26CC0AFE00D8FBBD /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				B1B894391A00345200C5CF2D /* OTFResearchKit_Private.h */,
-			);
-			path = Private;
-			sourceTree = "<group>";
-		};
 		866DA5121D63D01C00C9AF3F /* DataCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -2732,9 +2724,9 @@
 			isa = PBXGroup;
 			children = (
 				B1C1DE4F196F541F00F75544 /* OTFResearchKit.h */,
+				B1B894391A00345200C5CF2D /* OTFResearchKit_Private.h */,
 				BC94EF2F1E962F7400143081 /* ORKDeprecated.h */,
 				BC94EF301E962F7400143081 /* ORKDeprecated.m */,
-				84DD8E0F26CC0AFE00D8FBBD /* Private */,
 				86C40B511A8D7C5B00081FAC /* Common */,
 				86C40AF91A8D7C5B00081FAC /* Active Tasks */,
 				259E76FB1AFFAEAC0070F786 /* Charts */,
