@@ -2,7 +2,7 @@ framework module OTFResearchKit {
     umbrella header "OTFResearchKit.h"
     
     module Private {
-        umbrella header "OTFResearchKit_Private.h"
+        umbrella header "Private/OTFResearchKit_Private.h"
         export *
     }
     
