@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '11.0'
   s.requires_arc = true
   s.swift_version = '5.0'
-  s.module_map = "OTFResearchKit/OTFResearchKit.modulemap"
+ # s.module_map = "OTFResearchKit/OTFResearchKit.modulemap"
   s.platform     = :ios, '11.0'
   s.default_subspec = 'Care'
 
