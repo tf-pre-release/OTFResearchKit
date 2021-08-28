@@ -29,8 +29,6 @@
  */
 
 
-#import <OTFResearchKit/OTFResearchKit.h>
-
 #import <OTFResearchKit/ORKHelpers_Private.h>
 #import <OTFResearchKit/ORKHelpers_Internal.h>
 
