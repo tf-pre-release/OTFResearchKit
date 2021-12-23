@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://www.github.com/ResearchKit/ResearchKit'
   s.documentation_url = 'http://researchkit.github.io/docs/'
   s.license      = { :type => 'BSD', :file => 'LICENSE' }
-  s.author       = { 'researchkit.org' => 'http://researchkit.org' }
+  s.author       = { 'Hippocrates Technologies' => 'hippocratestech-dev@googlegroups.com' }
   s.source       = { :git => 'https://github.com/HippocratesTech/OTFResearchKit', :tag => s.version.to_s }
  # s.source       = { :git => './', :tag => s.version.to_s }
   s.resources    = 'OTFResearchKit/**/*.{fsh,vsh}', 'OTFResearchKit/Animations/**/*.m4v', 'OTFResearchKit/Artwork.xcassets', 'OTFResearchKit/Localized/*.lproj'
@@ -15,7 +15,6 @@ Pod::Spec.new do |s|
   s.module_map = "OTFResearchKit/OTFResearchKit.modulemap"
   s.platform     = :ios, '11.0'
   s.default_subspec = 'Care'
-
   s.subspec 'Care' do |ss|
     ss.name = 'Care'
     ss.source_files = 'OTFResearchKit/**/*.{h,m,swift}'
@@ -26,7 +25,6 @@ Pod::Spec.new do |s|
     }
     ss.platform     = :ios, '11.0'
   end
-
   s.subspec 'Health' do |ss|
     ss.name = 'Health'
     ss.source_files = 'OTFResearchKit/**/*.{h,m,swift}'
@@ -37,7 +35,6 @@ Pod::Spec.new do |s|
     }
     ss.platform     = :ios, '11.0'
   end
-
   s.subspec 'CareHealth' do |ss|
     ss.name = 'CareHealth'
     ss.source_files = 'OTFResearchKit/**/*.{h,m,swift}'
@@ -48,6 +45,4 @@ Pod::Spec.new do |s|
     }
     ss.platform     = :ios, '11.0'
   end
-
-
 end
