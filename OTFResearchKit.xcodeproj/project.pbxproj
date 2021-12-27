@@ -352,6 +352,12 @@
 		8419D66F1FB73CC80088D7E5 /* ORKWebViewStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 8419D66D1FB73CC80088D7E5 /* ORKWebViewStep.m */; };
 		8419D6721FB73EC60088D7E5 /* ORKWebViewStepViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8419D6701FB73EC60088D7E5 /* ORKWebViewStepViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8419D6731FB73EC60088D7E5 /* ORKWebViewStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8419D6711FB73EC60088D7E5 /* ORKWebViewStepViewController.m */; };
+		845686132779DD8D00A670E0 /* ORKRequestPermissionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 845686112779DD8D00A670E0 /* ORKRequestPermissionButton.m */; };
+		845686142779DD8D00A670E0 /* ORKRequestPermissionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 845686122779DD8D00A670E0 /* ORKRequestPermissionButton.h */; };
+		845686192779EDC500A670E0 /* ORKMotionActivityPermissionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 845686152779EDC400A670E0 /* ORKMotionActivityPermissionType.m */; };
+		8456861A2779EDC500A670E0 /* ORKNotificationPermissionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 845686162779EDC500A670E0 /* ORKNotificationPermissionType.m */; };
+		8456861B2779EDC500A670E0 /* ORKMotionActivityPermissionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 845686172779EDC500A670E0 /* ORKMotionActivityPermissionType.h */; };
+		8456861C2779EDC500A670E0 /* ORKNotificationPermissionType.h in Headers */ = {isa = PBXBuildFile; fileRef = 845686182779EDC500A670E0 /* ORKNotificationPermissionType.h */; };
 		84F21F6F26CA2A4C0093255F /* ORKTimedWalkContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F21F6926CA2A4B0093255F /* ORKTimedWalkContentView.m */; };
 		84F21F7026CA2A4C0093255F /* ORKTimedWalkContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F21F6A26CA2A4B0093255F /* ORKTimedWalkContentView.h */; };
 		84F21F7126CA2A4C0093255F /* ORKTimedWalkStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F21F6B26CA2A4C0093255F /* ORKTimedWalkStepViewController.m */; };
@@ -1287,6 +1293,12 @@
 		8419D66D1FB73CC80088D7E5 /* ORKWebViewStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKWebViewStep.m; sourceTree = "<group>"; };
 		8419D6701FB73EC60088D7E5 /* ORKWebViewStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKWebViewStepViewController.h; sourceTree = "<group>"; };
 		8419D6711FB73EC60088D7E5 /* ORKWebViewStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKWebViewStepViewController.m; sourceTree = "<group>"; };
+		845686112779DD8D00A670E0 /* ORKRequestPermissionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKRequestPermissionButton.m; sourceTree = "<group>"; };
+		845686122779DD8D00A670E0 /* ORKRequestPermissionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKRequestPermissionButton.h; sourceTree = "<group>"; };
+		845686152779EDC400A670E0 /* ORKMotionActivityPermissionType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKMotionActivityPermissionType.m; sourceTree = "<group>"; };
+		845686162779EDC500A670E0 /* ORKNotificationPermissionType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKNotificationPermissionType.m; sourceTree = "<group>"; };
+		845686172779EDC500A670E0 /* ORKMotionActivityPermissionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKMotionActivityPermissionType.h; sourceTree = "<group>"; };
+		845686182779EDC500A670E0 /* ORKNotificationPermissionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKNotificationPermissionType.h; sourceTree = "<group>"; };
 		84DD8E1226CC132400D8FBBD /* OTFResearchKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = OTFResearchKit.modulemap; sourceTree = "<group>"; };
 		84F21F6926CA2A4B0093255F /* ORKTimedWalkContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKTimedWalkContentView.m; sourceTree = "<group>"; };
 		84F21F6A26CA2A4B0093255F /* ORKTimedWalkContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKTimedWalkContentView.h; sourceTree = "<group>"; };
@@ -2362,6 +2374,8 @@
 			isa = PBXGroup;
 			children = (
 				51E03D60249196E0008F8406 /* Permission Types */,
+				845686122779DD8D00A670E0 /* ORKRequestPermissionButton.h */,
+				845686112779DD8D00A670E0 /* ORKRequestPermissionButton.m */,
 				511987C1246330CA004FC2C7 /* ORKRequestPermissionsStep.h */,
 				511987C2246330CA004FC2C7 /* ORKRequestPermissionsStep.m */,
 				511987C52463316E004FC2C7 /* ORKRequestPermissionsStepViewController.h */,
@@ -2419,6 +2433,10 @@
 			children = (
 				51E03D6124919711008F8406 /* ORKPermissionType.h */,
 				51E03D6224919711008F8406 /* ORKPermissionType.m */,
+				845686172779EDC500A670E0 /* ORKMotionActivityPermissionType.h */,
+				845686152779EDC400A670E0 /* ORKMotionActivityPermissionType.m */,
+				845686182779EDC500A670E0 /* ORKNotificationPermissionType.h */,
+				845686162779EDC500A670E0 /* ORKNotificationPermissionType.m */,
 				51E03D652491A5E0008F8406 /* HealthKit Permission Type */,
 			);
 			name = "Permission Types";
@@ -4041,6 +4059,7 @@
 				FF919A3B1E81AF1D005C2A1E /* ORKFileResult.h in Headers */,
 				FF919A561E81BEE0005C2A1E /* ORKCollectionResult_Private.h in Headers */,
 				51751463245A5172009E8FFC /* ORKFrontFacingCameraStepViewController.h in Headers */,
+				8456861B2779EDC500A670E0 /* ORKMotionActivityPermissionType.h in Headers */,
 				FF919A661E81D168005C2A1E /* ORKSignatureResult_Private.h in Headers */,
 				BA95AA9E20ACD0E700E7FF8E /* ORKAmslerGridContentView.h in Headers */,
 				FFAE71401DAEC66200AE82B4 /* ORKFootnoteLabel.h in Headers */,
@@ -4105,6 +4124,7 @@
 				86C40CEA1A8D7C5C00081FAC /* ORKAnswerTextField.h in Headers */,
 				BA473FE8224DB38900A362E3 /* ORKBodyItem.h in Headers */,
 				2429D5721BBB5397003A512F /* ORKRegistrationStep.h in Headers */,
+				845686142779DD8D00A670E0 /* ORKRequestPermissionButton.h in Headers */,
 				65EEE15A21B12CFD007858E8 /* ORKTouchAbilityLongPressStepViewController.h in Headers */,
 				B183A4A21A8535D100C76870 /* OTFResearchKit_Private.h in Headers */,
 				242C9E111BBE06DE0088B7F4 /* ORKVerificationStepView.h in Headers */,
@@ -4208,6 +4228,7 @@
 				24A4DA181B8D13FE009C797A /* ORKPasscodeStepViewController.h in Headers */,
 				BA8C067822EEB84B00ACDE6B /* ORKPlaybackButton.h in Headers */,
 				86C40CB81A8D7C5C00081FAC /* ORKVoiceEngine.h in Headers */,
+				8456861C2779EDC500A670E0 /* ORKNotificationPermissionType.h in Headers */,
 				24A4DA141B8D1115009C797A /* ORKPasscodeStep.h in Headers */,
 				BCB6E6521B7D533B000D5B34 /* ORKPieChartLegendCell.h in Headers */,
 				FA7A9D331B0843A9005A2BEA /* ORKConsentSignatureFormatter.h in Headers */,
@@ -4856,6 +4877,7 @@
 				65E3636C2177271000AEE2F6 /* ORKTouchAbilityTapStepViewController.m in Sources */,
 				86C40C701A8D7C5C00081FAC /* CMMotionActivity+ORKJSONDictionary.m in Sources */,
 				147503B01AEE8071004B17F3 /* ORKAudioGenerator.m in Sources */,
+				845686132779DD8D00A670E0 /* ORKRequestPermissionButton.m in Sources */,
 				86C40D7E1A8D7C5C00081FAC /* ORKScaleValueLabel.m in Sources */,
 				8056857A1C90C19500BF437A /* UIImage+OTFResearchKit.m in Sources */,
 				BA8C5022226FFB04001896D0 /* ORKLearnMoreItem.m in Sources */,
@@ -5000,6 +5022,7 @@
 				781D54111DF886AB00223305 /* ORKTrailmakingContentView.m in Sources */,
 				5185A799227C960500A570DE /* ORKLandoltCStepContentView.swift in Sources */,
 				6500FCA221CA3C3000AC1CA3 /* ORKTouchAbilityRotationResult.m in Sources */,
+				845686192779EDC500A670E0 /* ORKMotionActivityPermissionType.m in Sources */,
 				FF919A501E81BD05005C2A1E /* ORKTrailmakingResult.m in Sources */,
 				FF5051F11D66908C0065E677 /* ORKNavigablePageStep.m in Sources */,
 				86C40C861A8D7C5C00081FAC /* ORKActiveStepTimer.m in Sources */,
@@ -5033,6 +5056,7 @@
 				FA7A9D301B083DD3005A2BEA /* ORKConsentSectionFormatter.m in Sources */,
 				86C40D2A1A8D7C5C00081FAC /* ORKFormTextView.m in Sources */,
 				659AAA46218C420F00622C68 /* ORKTouchAbilityTrack.m in Sources */,
+				8456861A2779EDC500A670E0 /* ORKNotificationPermissionType.m in Sources */,
 				242C9E0E1BBE03F90088B7F4 /* ORKVerificationStepViewController.m in Sources */,
 				51EBC32E2286254E00FF338C /* ExtensionModel.swift in Sources */,
 				6500FC9A21CA3BA900AC1CA3 /* ORKTouchAbilityRotationContentView.m in Sources */,

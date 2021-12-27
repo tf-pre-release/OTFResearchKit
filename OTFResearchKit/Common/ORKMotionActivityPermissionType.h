@@ -28,8 +28,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <ResearchKit/ORKDefines.h>
-#import <ResearchKit/ORKPermissionType.h>
+#import <OTFResearchKit/ORKDefines.h>
+#import <OTFResearchKit/ORKPermissionType.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

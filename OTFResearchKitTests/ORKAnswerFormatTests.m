@@ -30,7 +30,7 @@
 
 
 @import XCTest;
-@import ResearchKit.Private;
+@import OTFResearchKit.Private;
 
 
 @interface ORKAnswerFormatTests : XCTestCase
@@ -565,6 +565,7 @@
     XCTAssertEqual([[[answerFormat textChoices] objectAtIndex:1] value], [NSNumber numberWithInteger:2]);
 }
 
+#if defined HEALTH || defined CAREHEALTH
 - (void)testHealthKitCharacteristicTypeAnswerFormat {
     
     HKCharacteristicType *biologicalSex = [HKCharacteristicType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierBiologicalSex];
@@ -652,6 +653,7 @@
     XCTAssertEqual([answerFormat numericAnswerStyle], ORKNumericAnswerStyleInteger);
     XCTAssertEqual([answerFormat quantityType], calories);
 }
+#endif
 
 - (void)testDateAnswerFormat {
     
