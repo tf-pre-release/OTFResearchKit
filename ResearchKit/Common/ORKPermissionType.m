@@ -28,27 +28,25 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@import UIKit;
-@import Foundation;
+#import "ORKHealthKitPermissionType.h"
+#import "ORKNotificationPermissionType.h"
+#import "ORKMotionActivityPermissionType.h"
+#import "ORKHelpers_Internal.h"
+#import "ORKPermissionType.h"
 
-@class ORKRequestPermissionButton;
+@implementation ORKPermissionType
 
-NS_ASSUME_NONNULL_BEGIN
++ (ORKHealthKitPermissionType *)healthKitPermissionTypeWithSampleTypesToWrite:(NSSet<HKSampleType *> *)sampleTypesToWrite objectTypesToRead:(NSSet<HKObjectType *> *)objectTypesToRead {
+    return [[ORKHealthKitPermissionType alloc] initWithSampleTypesToWrite:sampleTypesToWrite
+                                                        objectTypesToRead:objectTypesToRead];
+}
 
-typedef NSString * ORKRequestPermissionsNotification NS_STRING_ENUM;
-extern ORKRequestPermissionsNotification const ORKRequestPermissionsNotificationCardViewStatusChanged;
++ (ORKNotificationPermissionType *)notificationPermissionType:(UNAuthorizationOptions)options {
+    return [[ORKNotificationPermissionType alloc] initWithAuthorizationOptions:options];
+}
 
-@interface ORKRequestPermissionView : UIView
-
-- (instancetype)initWithIconImage:(nullable UIImage *)iconImage
-                            title:(NSString *)title
-                       detailText:(NSString *)detailText;
-
-@property (nonatomic, strong) ORKRequestPermissionButton *requestPermissionButton;
-@property (nonatomic) BOOL enableContinueButton;
-
-- (void)updateIconTintColor:(UIColor *)iconTintColor;
++ (ORKMotionActivityPermissionType *)deviceMotionPermissionType {
+    return [[ORKMotionActivityPermissionType alloc] init];
+}
 
 @end
-
-NS_ASSUME_NONNULL_END
