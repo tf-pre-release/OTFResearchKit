@@ -6,4 +6,4 @@ The detailed documentation is available here: https://github.com/TheraForge/OTFR
 
 # License <a name="License"></a>
 
-This project is made available under the terms of a modified BSD license. See the [LICENSE](LICENSE.md) file.
+This project is made available under the terms of a modified BSD license. See the [LICENSE](../blob/theraforge-main/LICENSE) file.
