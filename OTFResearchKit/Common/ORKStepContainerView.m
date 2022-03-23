@@ -372,7 +372,7 @@ static NSString *scrollContentChangedNotification = @"scrollContentChanged";
     // dispatching on main thread to prevent the blur view from popping-up after transition is complete
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateEffectViewStylingAndAnimate:NO checkCurrentValue:NO];
-        if (_scrollViewCustomContentInset != ORKCGFloatDefaultValue) {
+        if (self->_scrollViewCustomContentInset != ORKCGFloatDefaultValue) {
             [self updateScrollViewCustomContentInset];
         }
     });

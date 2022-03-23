@@ -102,7 +102,7 @@ static const CGFloat activityIndicatorPadding = 24.0;
 - (void)setStylingOpactity:(CGFloat)opacity animated:(BOOL)animated {
     if (animated == YES) {
         [UIView animateWithDuration:0.2 animations:^(void) {
-            effectView.alpha = opacity;
+            self->effectView.alpha = opacity;
         }];
     } else {
         effectView.alpha = opacity;
@@ -191,7 +191,7 @@ static const CGFloat activityIndicatorPadding = 24.0;
     ((ORKTextButton *)sender).isInTransition = YES;
     _continueOrSkipButtonJustTapped = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        _continueOrSkipButtonJustTapped = NO;
+        self->_continueOrSkipButtonJustTapped = NO;
         // Re-enable skip button
         ((UIView *)sender).userInteractionEnabled = YES;
         ((ORKTextButton *)sender).isInTransition = NO;
@@ -210,7 +210,7 @@ static const CGFloat activityIndicatorPadding = 24.0;
     ((ORKTextButton *)sender).isInTransition = YES;
     _continueOrSkipButtonJustTapped = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        _continueOrSkipButtonJustTapped = NO;
+        self->_continueOrSkipButtonJustTapped = NO;
         ((ORKTextButton *)sender).isInTransition = NO;
         [self updateContinueAndSkipEnabled];
     });

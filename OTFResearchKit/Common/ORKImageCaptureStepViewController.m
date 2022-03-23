@@ -155,7 +155,7 @@
 - (void)retakePressed:(void (^)(void))handler {
     // Start the capture session, and reset the captured image to nil
     dispatch_async(_sessionQueue, ^{
-        [_captureSession startRunning];
+        [self->_captureSession startRunning];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.capturedImageData = nil;
             if (handler) {
@@ -203,18 +203,18 @@
 - (void)capturePressed:(void (^)(BOOL))handler {
     // Capture image
     dispatch_async(_sessionQueue, ^{
-        if (_captureRaw && [_photoOutput availableRawPhotoFileTypes]) {
-             [_photoOutput capturePhotoWithSettings:[self createRawPhotoSettings] delegate:self];
-            _imageDataExtension = @"dng";
+        if (self->_captureRaw && [self->_photoOutput availableRawPhotoFileTypes]) {
+             [self->_photoOutput capturePhotoWithSettings:[self createRawPhotoSettings] delegate:self];
+            self->_imageDataExtension = @"dng";
         } else {
-            [_photoOutput capturePhotoWithSettings:[self generatePhotoSetting] delegate:self];
-            _captureRaw = NO;
+            [self->_photoOutput capturePhotoWithSettings:[self generatePhotoSetting] delegate:self];
+            self->_captureRaw = NO;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             // Notify handler that we are done
             if (handler) {
-                handler(_capturedImageData != nil);
+                handler(self->_capturedImageData != nil);
             }
         });
     });
@@ -243,10 +243,10 @@
     // Use the main queue, as UI components may need to be updated
     dispatch_async(dispatch_get_main_queue(), ^{
         // Set this, even if there was an error and we got a nil buffer
-        if (_captureRaw) {
-            self.capturedImageData = _rawImageData;
+        if (self->_captureRaw) {
+            self.capturedImageData = self->_rawImageData;
         } else {
-            self.capturedImageData = _compressedImageData;
+            self.capturedImageData = self->_compressedImageData;
         }
     });
 }
@@ -274,16 +274,16 @@
     // If we don't already have a captured image, then start the capture session running
     if (!_capturedImageData) {
         dispatch_async(_sessionQueue, ^{
-            [_captureSession startRunning];
+            [self->_captureSession startRunning];
         });
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // If the capture session is running, stop it
-    if (_captureSession.isRunning) {
+    if (self->_captureSession.isRunning) {
         dispatch_async(_sessionQueue, ^{
-            [_captureSession stopRunning];
+            [self->_captureSession stopRunning];
         });
     }
     

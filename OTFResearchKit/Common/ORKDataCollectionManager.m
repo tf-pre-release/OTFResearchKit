@@ -249,8 +249,8 @@ static inline void dispatch_sync_if_not_on_queue(dispatch_queue_t queue, dispatc
     __block NSError *errorOut = nil;
     [self onWorkQueueSync:^BOOL(ORKDataCollectionManager *manager) {
         
-        if (_operationQueue.operationCount > 0) {
-            ORK_Log_Debug("[startWithObserving] returned due to operation queue is not empty (queue size = %@)", @(_operationQueue.operationCount));
+        if (self->_operationQueue.operationCount > 0) {
+            ORK_Log_Debug("[startWithObserving] returned due to operation queue is not empty (queue size = %@)", @(self->_operationQueue.operationCount));
             errorOut = [NSError errorWithDomain:ORKErrorDomain code:ORKErrorException userInfo:@{NSLocalizedFailureReasonErrorKey: @"Cannot remove collector during collection."}];
             return NO;
         }
@@ -265,7 +265,7 @@ static inline void dispatch_sync_if_not_on_queue(dispatch_queue_t queue, dispatc
         
         // Remove the collector from the collectors array
         [collectors removeObject:collector];
-        _collectors = [collectors copy];
+        self->_collectors = [collectors copy];
         
         success = YES;
         return YES;
@@ -283,8 +283,8 @@ static inline void dispatch_sync_if_not_on_queue(dispatch_queue_t queue, dispatc
     NSMutableArray<ORKOperation *> *operations = [NSMutableArray array];
     [self onWorkQueueAsync:^BOOL(ORKDataCollectionManager *manager) {
         
-        if (_operationQueue.operationCount > 0) {
-            ORK_Log_Debug("[startWithObserving] returned due to operation queue is not empty (queue size = %@)", @(_operationQueue.operationCount));
+        if (self->_operationQueue.operationCount > 0) {
+            ORK_Log_Debug("[startWithObserving] returned due to operation queue is not empty (queue size = %@)", @(self->_operationQueue.operationCount));
             return NO;
         }
         
@@ -319,14 +319,14 @@ static inline void dispatch_sync_if_not_on_queue(dispatch_queue_t queue, dispatc
             
             typeof(self) strongSelf = weakSelf;
             [strongSelf onWorkQueueSync:^BOOL(ORKDataCollectionManager *collectionManager) {
-                if (_delegate && [_delegate respondsToSelector:@selector(dataCollectionManagerDidCompleteCollection:)]) {
-                    [_delegate dataCollectionManagerDidCompleteCollection:self];
+                if (self->_delegate && [self->_delegate respondsToSelector:@selector(dataCollectionManagerDidCompleteCollection:)]) {
+                    [self->_delegate dataCollectionManagerDidCompleteCollection:self];
                 }
 #if HEALTH
-                for (HKObserverQueryCompletionHandler handler in _completionHandlers) {
+                for (HKObserverQueryCompletionHandler handler in self->_completionHandlers) {
                     handler();
                 }
-                [_completionHandlers removeAllObjects];
+                [self->_completionHandlers removeAllObjects];
 #endif
                 return NO;
             }];
@@ -337,8 +337,8 @@ static inline void dispatch_sync_if_not_on_queue(dispatch_queue_t queue, dispatc
         }
         
         ORK_Log_Debug("Data Collection queue - new operations:\n%@", operations);
-        [_operationQueue addOperations:operations waitUntilFinished:NO];
-        [_operationQueue addOperation:completionOperation];
+        [self->_operationQueue addOperations:operations waitUntilFinished:NO];
+        [self->_operationQueue addOperation:completionOperation];
         
         // No need to persist collectors
         return NO;

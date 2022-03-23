@@ -691,7 +691,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return An landolt C visual acuity task that can be presented with an `ORKTaskViewController` object.
  */
 + (ORKOrderedTask *)landoltCVisualAcuityTaskWithIdentifier:(NSString *)identifier
-                                    intendedUseDescription:(nullable NSString *)itendedDescription;
+                                    intendedUseDescription:(nullable NSString *)intendedUseDescription;
 
 /**
  Returns a predefined task that measures contrast sensitivity using landolt C.
@@ -704,7 +704,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return An landolt C contrast sensitivity task that can be presented with an `ORKTaskViewController` object.
  */
 + (ORKOrderedTask *)landoltCContrastSensitivityTaskWithIdentifier:(NSString *)identifier
-                                    intendedUseDescription:(nullable NSString *)itendedDescription;                                     
+                                    intendedUseDescription:(nullable NSString *)intendedUseDescription;
 
 
 + (ORKOrderedTask *)touchAbilityTaskWithIdentifier:(NSString *)identifier

@@ -495,8 +495,8 @@ static NSString *ORKBulletUnicode = @"\u2981";
     for (NSInteger i = 0; i < _views.count; i++) {
         if (i == indexToShow) {
             [UIView transitionWithView:_views[i] duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^ {
-                [self setCustomSpacing:ORKCardStyleBuildInPostitionEnd afterView:_views[i - 1]];
-                _views[i].alpha = 1;
+                [self setCustomSpacing:ORKCardStyleBuildInPostitionEnd afterView:self->_views[i - 1]];
+                self->_views[i].alpha = 1;
             } completion:nil];
         }
     }

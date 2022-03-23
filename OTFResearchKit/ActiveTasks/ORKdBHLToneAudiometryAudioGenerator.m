@@ -93,7 +93,7 @@ static OSStatus ORKdBHLAudioGeneratorRenderTone(void *inRefCon,
     // Get the tone parameters out of the view controller
     ORKdBHLToneAudiometryAudioGenerator *audioGenerator = (__bridge ORKdBHLToneAudiometryAudioGenerator *)inRefCon;
     double amplitude;
-
+    
     amplitude = [audioGenerator->_amplitudeGain doubleValue];
     
     double theta = audioGenerator->_theta;
@@ -143,14 +143,14 @@ static OSStatus ORKdBHLAudioGeneratorRenderTone(void *inRefCon,
 }
 
 static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
-                                             AudioUnitRenderActionFlags *ioActionFlags,
-                                             const AudioTimeStamp         *inTimeStamp,
-                                             UInt32                     inBusNumber,
-                                             UInt32                     inNumberFrames,
-                                             AudioBufferList             *ioData) {
+                                              AudioUnitRenderActionFlags *ioActionFlags,
+                                              const AudioTimeStamp         *inTimeStamp,
+                                              UInt32                     inBusNumber,
+                                              UInt32                     inNumberFrames,
+                                              AudioBufferList             *ioData) {
     // Get the tone parameters out of the view controller
     ORKdBHLToneAudiometryAudioGenerator *audioGenerator = (__bridge ORKdBHLToneAudiometryAudioGenerator *)inRefCon;
- 
+    
     // This is a mono tone generator so we only need the first buffer
     Float32 *bufferActive    = (Float32 *)ioData->mBuffers[audioGenerator->_activeChannel].mData;
     Float32 *bufferNonActive = (Float32 *)ioData->mBuffers[1 - audioGenerator->_activeChannel].mData;
@@ -161,7 +161,7 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
         bufferActive[frame] = bufferValue;
         bufferNonActive[frame] = bufferValue;
     }
-
+    
     return noErr;
 }
 
@@ -173,7 +173,7 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
         _lastNodeInput = 0;
         
         _sensitivityPerFrequency = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"frequency_dBSPL_%@", [headphones uppercaseString]]  ofType:@"plist"]];
-
+        
         _retspl = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"retspl_%@", [headphones uppercaseString]] ofType:@"plist"]];
         
         if ([[headphones uppercaseString] isEqualToString:@"AIRPODS"]) {
@@ -250,11 +250,11 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
             }
             size = sizeof(desc);
             AudioUnitGetProperty(  _mMixer,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Input,
-                                    i,
-                                    &desc,
-                                    &size);
+                                 kAudioUnitProperty_StreamFormat,
+                                 kAudioUnitScope_Input,
+                                 i,
+                                 &desc,
+                                 &size);
             memset (&desc, 0, sizeof (desc));
             const int four_bytes_per_float = 4;
             const int eight_bits_per_byte = 8;
@@ -269,19 +269,19 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
             desc.mBitsPerChannel = four_bytes_per_float * eight_bits_per_byte;
             
             AudioUnitSetProperty(  _mMixer,
-                                    kAudioUnitProperty_StreamFormat,
-                                    kAudioUnitScope_Input,
-                                    i,
-                                    &desc,
-                                    sizeof(desc));
+                                 kAudioUnitProperty_StreamFormat,
+                                 kAudioUnitScope_Input,
+                                 i,
+                                 &desc,
+                                 sizeof(desc));
         }
         
         AudioUnitSetProperty(  _mMixer,
-                                kAudioUnitProperty_StreamFormat,
-                                kAudioUnitScope_Output,
-                                0,
-                                &desc,
-                                sizeof(desc));
+                             kAudioUnitProperty_StreamFormat,
+                             kAudioUnitScope_Output,
+                             0,
+                             &desc,
+                             sizeof(desc));
         AUGraphInitialize(_mGraph);
         AUGraphStart(_mGraph);
     }
@@ -312,11 +312,11 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
         _rampUp = NO;
         int nodeInput = (_lastNodeInput % 2) + 1;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_fadeInDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (_mGraph) {
+            if (self->_mGraph) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    AUGraphDisconnectNodeInput(_mGraph, _mixerNode, nodeInput);
-                    AUGraphUpdate(_mGraph, NULL);
-                }); 
+                    AUGraphDisconnectNodeInput(self->_mGraph, self->_mixerNode, nodeInput);
+                    AUGraphUpdate(self->_mGraph, NULL);
+                });
             }
         });
     }
@@ -352,9 +352,9 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
     
     NSDecimalNumber *tempdBHL = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%f", dbHL]];
     NSDecimalNumber *attenuationOffset = [baselinedBSPL decimalNumberByAdding:tempdBHL];
-
+    
     NSDecimalNumber *attenuation = [attenuationOffset decimalNumberBySubtracting:updated_dBSPLFor_dBFS];
-
+    
     // if the signal starts clipping
     if ([attenuation doubleValue] >= -1) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(toneWillStartClipping)]) {

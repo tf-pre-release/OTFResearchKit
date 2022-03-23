@@ -177,8 +177,8 @@ static CGFloat CircleIndicatorPulseVarianceForProgress(CGFloat progress) {
                           delay:0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-        _circleIndicatorView.transform = CGAffineTransformMakeScale(circleDiameter, circleDiameter);
-        _circleIndicatorView.backgroundColor = progress >= ORKRingViewMaximumValue ? _circleIndicatorNoiseColor : self.tintColor;
+        self->_circleIndicatorView.transform = CGAffineTransformMakeScale(circleDiameter, circleDiameter);
+        self->_circleIndicatorView.backgroundColor = progress >= ORKRingViewMaximumValue ? self->_circleIndicatorNoiseColor : self.tintColor;
     } completion:nil];
     
     [self updateInstructionForValue:progress];
@@ -221,16 +221,16 @@ static CGFloat CircleIndicatorPulseVarianceForProgress(CGFloat progress) {
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        NSString *currentInstruction = [_DBInstructionLabel.text copy];
+        NSString *currentInstruction = [self->_DBInstructionLabel.text copy];
         NSString *newInstruction = progress >= ORKRingViewMaximumValue ? ORKLocalizedString(@"ENVIRONMENTSPL_NOISE", nil) : ORKLocalizedString(@"ENVIRONMENTSPL_OK", nil);
         
         if (![newInstruction isEqualToString:currentInstruction])
         {
-            _DBInstructionLabel.text = newInstruction;
+            self->_DBInstructionLabel.text = newInstruction;
             
             if (UIAccessibilityIsVoiceOverRunning() && [self.voiceOverDelegate respondsToSelector:@selector(contentView:shouldAnnounce:)])
             {
-                [self.voiceOverDelegate contentView:self shouldAnnounce:_DBInstructionLabel.text];
+                [self.voiceOverDelegate contentView:self shouldAnnounce:self->_DBInstructionLabel.text];
             }
         }
     });
