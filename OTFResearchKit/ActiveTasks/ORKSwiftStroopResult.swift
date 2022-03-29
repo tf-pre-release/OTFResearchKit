@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import OTFResearchKit.Private
 
 public class ORKSwiftStroopResult: ORKResult {

@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import Foundation
 import ResearchKit
 
@@ -36,7 +35,6 @@ class BarGraphDataSource: NSObject, ORKValueStackGraphChartViewDataSource {
     
     var plotPoints: [[ORKValueStack]]!
     var datePoints = [String]()
-
     
     override init() {
         super.init()
@@ -54,7 +52,7 @@ class BarGraphDataSource: NSObject, ORKValueStackGraphChartViewDataSource {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: tremorPath), options: .mappedIfSafe)
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-                if let tremorData = jsonResult as? [Dictionary<String, AnyObject>] {
+                if let tremorData = jsonResult as? [[String: AnyObject]] {
                     
                     let tremorPerHour = stride(from: 0, to: tremorData.count, by: 60).map {
                         Array(tremorData[$0..<min($0 + 60, tremorData.count)])
@@ -89,7 +87,7 @@ class BarGraphDataSource: NSObject, ORKValueStackGraphChartViewDataSource {
                 let data = try Data(contentsOf: URL(fileURLWithPath: dyskinesiaPath), options: .mappedIfSafe)
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
                 
-                if let dyskinesiaData = jsonResult as? [Dictionary<String, AnyObject>] {
+                if let dyskinesiaData = jsonResult as? [[String: AnyObject]] {
                     
                     let dyskinesiaPerHour = stride(from: 0, to: dyskinesiaData.count, by: 60).map {
                         Array(dyskinesiaData[$0..<min($0 + 60, dyskinesiaData.count)])

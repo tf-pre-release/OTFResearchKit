@@ -291,44 +291,44 @@ class ResultTableViewProvider: NSObject, UITableViewDataSource, UITableViewDeleg
         let resultRow = resultRows[(indexPath as NSIndexPath).row]
         
         switch resultRow {
-            case let .text(text, detail: detailText, selectable):
-                let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.default.rawValue, for: indexPath)
+        case let .text(text, detail: detailText, selectable):
+        let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.default.rawValue, for: indexPath)
 
-                cell.textLabel!.text = text
-                cell.detailTextLabel!.text = detailText
-                
-                if #available(iOS 13.0, *) {
-                    cell.textLabel?.textColor = UIColor.label
-                    cell.detailTextLabel?.textColor = UIColor.secondaryLabel
-                }
-                
-                /*
-                    In this sample, the accessory type should be a disclosure
-                    indicator if the table view cell is selectable.
-                */
-                cell.selectionStyle = selectable ? .default : .none
-                cell.accessoryType = selectable ? .disclosureIndicator : .none
-            
-                return cell
+        cell.textLabel!.text = text
+        cell.detailTextLabel!.text = detailText
+        
+        if #available(iOS 13.0, *) {
+            cell.textLabel?.textColor = UIColor.label
+            cell.detailTextLabel?.textColor = UIColor.secondaryLabel
+        }
+        
+        /*
+            In this sample, the accessory type should be a disclosure
+            indicator if the table view cell is selectable.
+        */
+        cell.selectionStyle = selectable ? .default : .none
+        cell.accessoryType = selectable ? .disclosureIndicator : .none
+    
+        return cell
 
-            case let .textImage(text, image):
-                let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.textImage.rawValue, for: indexPath) as! TextImageTableViewCell
+        case let .textImage(text, image):
+        let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.textImage.rawValue, for: indexPath) as! TextImageTableViewCell
 
-                cell.leftTextLabel.text = text
-                cell.rightImageView.image = image
-                
-                if #available(iOS 13.0, *) {
-                    cell.leftTextLabel.textColor = UIColor.label
-                }
+        cell.leftTextLabel.text = text
+        cell.rightImageView.image = image
+        
+        if #available(iOS 13.0, *) {
+            cell.leftTextLabel.textColor = UIColor.label
+        }
 
-                return cell
+        return cell
 
-            case let .image(image):
-                let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.image.rawValue, for: indexPath) as! ImageTableViewCell
+        case let .image(image):
+        let cell = tableView.dequeueReusableCell(withIdentifier: ResultRow.TableViewCellIdentifier.image.rawValue, for: indexPath) as! ImageTableViewCell
 
-                cell.fullImageView.image = image
+        cell.fullImageView.image = image
 
-                return cell
+        return cell
         }
     }
     
@@ -393,7 +393,6 @@ class ChoiceQuestionResultTableViewProvider: ResultTableViewProvider {
         ]
     }
 }
-
 
 /// Table view provider specific to an `ORKDateQuestionResult` instance.
 class DateQuestionResultTableViewProvider: ResultTableViewProvider {
@@ -614,7 +613,6 @@ class FileResultTableViewProvider: ResultTableViewProvider {
             // The URL of the generated file on disk.
             ResultRow(text: "fileURL", detail: questionResult.fileURL)
         ]
-
 
         if let fileURL = questionResult.fileURL, let contentType = questionResult.contentType, contentType.hasPrefix("image/"), !contentType.hasSuffix(".dng") {
             

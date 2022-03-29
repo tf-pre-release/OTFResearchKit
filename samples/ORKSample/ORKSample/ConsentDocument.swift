@@ -91,35 +91,35 @@ extension ORKConsentSectionType: CustomStringConvertible {
 
     public var description: String {
         switch self {
-            case .overview:
-                return "Overview"
-                
-            case .dataGathering:
-                return "DataGathering"
-                
-            case .privacy:
-                return "Privacy"
-                
-            case .dataUse:
-                return "DataUse"
-                
-            case .timeCommitment:
-                return "TimeCommitment"
-                
-            case .studySurvey:
-                return "StudySurvey"
-                
-            case .studyTasks:
-                return "StudyTasks"
-                
-            case .withdrawing:
-                return "Withdrawing"
-                
-            case .custom:
-                return "Custom"
-                
-            case .onlyInDocument:
-                return "OnlyInDocument"
+        case .overview:
+            return "Overview"
+            
+        case .dataGathering:
+            return "DataGathering"
+            
+        case .privacy:
+            return "Privacy"
+            
+        case .dataUse:
+            return "DataUse"
+            
+        case .timeCommitment:
+            return "TimeCommitment"
+            
+        case .studySurvey:
+            return "StudySurvey"
+            
+        case .studyTasks:
+            return "StudyTasks"
+            
+        case .withdrawing:
+            return "Withdrawing"
+            
+        case .custom:
+            return "Custom"
+            
+        case .onlyInDocument:
+            return "OnlyInDocument"
         }
     }
 }

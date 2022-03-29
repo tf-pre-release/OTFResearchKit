@@ -65,7 +65,6 @@ class ORKAmslerGridResultTests: XCTestCase {
     }
 }
 
-
 class ORKHolePegTestResultTests: XCTestCase {
     var result: ORKHolePegTestResult!
     var identifier: String!

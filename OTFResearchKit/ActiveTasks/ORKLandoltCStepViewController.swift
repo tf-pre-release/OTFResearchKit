@@ -58,7 +58,6 @@ public class ORKLandoltCStepViewController: ORKActiveStepViewController {
         
         return stepResult!
     }
-    
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +66,7 @@ public class ORKLandoltCStepViewController: ORKActiveStepViewController {
         activeStepView?.removeCustomContentPadding()
         activeStepView?.customContentFillsAvailableSpace = true
         
-        //        TODO: Localize
+        // TODO: Localize
         visionStepView.currentEyeLabel.text = eyeToTest == .left ? "Left Eye" : "Right Eye"
         visionStepView.continueButton.addTarget(self, action: #selector(continueButtonWasPressed), for: .touchUpInside)
         startTimer()
@@ -151,7 +150,7 @@ public class ORKLandoltCStepView: UIView {
         currentEyeLabel.textAlignment = .center
         currentEyeLabel.textColor = UIColor.black
         currentEyeLabel.numberOfLines = 0
-        //        TODO: set FontDescriptor
+        // TODO: set FontDescriptor
         currentEyeLabel.font = UIFont(name: "", size: 20.0)
         addSubview(currentEyeLabel)
     }
@@ -160,16 +159,16 @@ public class ORKLandoltCStepView: UIView {
         topInstructionLabel.textAlignment = .center
         topInstructionLabel.numberOfLines = 0
         topInstructionLabel.textColor = UIColor.black
-        //        TODO: Localize
+        // TODO: Localize
         topInstructionLabel.text = "Move the dial to where you think the opening in the letter was."
-        //        TODO: set FontDescriptor
+        // TODO: set FontDescriptor
         topInstructionLabel.font = UIFont(name: "", size: 20.0)
         topInstructionLabel.isHidden = true
         addSubview(topInstructionLabel)
     }
     
     func setupContinueButton() {
-        //        TODO: Localize
+        // TODO: Localize
         continueButton.diameter = 60.0
         continueButton.setTitle("Next", for: UIControl.State.normal)
         continueButton.backgroundColor = tintColor

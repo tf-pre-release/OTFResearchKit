@@ -84,19 +84,19 @@ class ProfileViewController: UITableViewController, HealthClientType {
         let objectType = healthObjectTypes[(indexPath as NSIndexPath).row]
         
         switch objectType.identifier {
-            case HKCharacteristicTypeIdentifier.dateOfBirth.rawValue:
-                configureCellWithDateOfBirth(cell)
+        case HKCharacteristicTypeIdentifier.dateOfBirth.rawValue:
+            configureCellWithDateOfBirth(cell)
+        
+        case HKQuantityTypeIdentifier.height.rawValue:
+            let title = NSLocalizedString("Height", comment: "")
+            configureCell(cell, withTitleText: title, valueForQuantityTypeIdentifier: objectType.identifier)
             
-            case HKQuantityTypeIdentifier.height.rawValue:
-                let title = NSLocalizedString("Height", comment: "")
-                configureCell(cell, withTitleText: title, valueForQuantityTypeIdentifier: objectType.identifier)
-                
-            case HKQuantityTypeIdentifier.bodyMass.rawValue:
-                let title = NSLocalizedString("Weight", comment: "")
-                configureCell(cell, withTitleText: title, valueForQuantityTypeIdentifier: objectType.identifier)
-            
-            default:
-                fatalError("Unexpected health object type identifier - \(objectType.identifier)")
+        case HKQuantityTypeIdentifier.bodyMass.rawValue:
+            let title = NSLocalizedString("Weight", comment: "")
+            configureCell(cell, withTitleText: title, valueForQuantityTypeIdentifier: objectType.identifier)
+        
+        default:
+            fatalError("Unexpected health object type identifier - \(objectType.identifier)")
         }
 
         return cell
@@ -144,7 +144,7 @@ class ProfileViewController: UITableViewController, HealthClientType {
             guard let quantity = quantity else { return }
             
             // Update the cell on the main thread.
-            OperationQueue.main.addOperation() {
+            OperationQueue.main.addOperation {
                 guard let indexPath = self.indexPathForObjectTypeIdentifier(identifier) else { return }
                 guard let cell = self.tableView.cellForRow(at: indexPath) as? ProfileStaticTableViewCell else { return }
                 

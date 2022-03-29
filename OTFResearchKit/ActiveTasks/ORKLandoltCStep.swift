@@ -72,7 +72,7 @@ public class ORKLandoltCStep: ORKActiveStep {
     }
 
     public override func copy(with zone: NSZone? = nil) -> Any {
-        let visionStep: ORKLandoltCStep = super.copy(with: zone) as! ORKLandoltCStep
+        guard let visionStep = super.copy(with: zone) as? ORKLandoltCStep else { fatalError("Failed to copy the object.") }
         return visionStep
     }
     
@@ -102,4 +102,3 @@ public class ORKLandoltCStep: ORKActiveStep {
     }
     
 }
-

@@ -73,7 +73,7 @@ public class ORKLandoltCResult: ORKResult {
     }
     
     override public func copy(with zone: NSZone? = nil) -> Any {
-        let result = super.copy(with: zone) as! ORKLandoltCResult
+        guard let result = super.copy(with: zone) as? ORKLandoltCResult else { fatalError("Failed to copy the object.")}
         
         result.outcome = outcome
         result.letterAngle = letterAngle
@@ -103,4 +103,3 @@ public class ORKLandoltCResult: ORKResult {
         return descriptionString
     }
 }
-

@@ -108,7 +108,6 @@ class ORKStepViewControllerTests: XCTestCase {
         XCTAssert(testController.presentedDate != nil)
         XCTAssertNil(testController.dismissedDate)
     }
-    
         
     func testShowValidityAlertWithTitle() {
 
@@ -173,7 +172,6 @@ class ORKStepViewControllerTests: XCTestCase {
         }
     }
     
-    
     func testResultDidChangeDelegate() {
         testExpectation = expectation(description: "ORKStepViewController notifies delegate that results changed")
         testController.notifyDelegateOnResultChange()
@@ -184,7 +182,6 @@ class ORKStepViewControllerTests: XCTestCase {
             }
         }
     }
-    
     
     func testSkip() {
         

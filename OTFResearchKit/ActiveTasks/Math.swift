@@ -73,4 +73,3 @@ internal class Math {
         return angle + startAngle - (Double(minValue) / ratio)
     }
 }
-

@@ -98,4 +98,3 @@ extension AppDelegate: ORKPasscodeDelegate {
     func passcodeViewControllerDidFailAuthentication(_ viewController: UIViewController) {
     }
 }
-

@@ -86,83 +86,83 @@ enum TaskListRow: Int, Printable {
     
     var description: String {
         switch self {
-            case .ScaleQuestion:
-                return NSLocalizedString("Scale Question", comment: "")
-                
-            case .NumericQuestion:
-                return NSLocalizedString("Numeric Question", comment: "")
-
-            case .TimeOfDayQuestion:
-                return NSLocalizedString("Time of Day Question", comment: "")
-                
-            case .DateQuestion:
-                return NSLocalizedString("Date Question", comment: "")
-
-            case .DateTimeQuestion:
-                return NSLocalizedString("Date and Time Question", comment: "")
-                
-            case .TimeIntervalQuestion:
-                return NSLocalizedString("Time Interval Question", comment: "")
-
-            case .TextQuestion:
-                return NSLocalizedString("Text Question", comment: "")
-                
-            case .ValuePickerChoiceQuestion:
-                return NSLocalizedString("Value Picker Choice Question", comment: "")
-                
-            case .TextChoiceQuestion:
-                return NSLocalizedString("Text Choice Question", comment: "")
-
-            case .ImageChoiceQuestion:
-                return NSLocalizedString("Image Choice Question", comment: "")
-
-            case .BooleanQuestion:
-                return NSLocalizedString("Boolean Question", comment: "")
-
-            case .TwoFingerTappingInterval:
-                return NSLocalizedString("Two Finger Tapping Interval Active Task", comment: "")
-
-            case .SpatialSpanMemory:
-                return NSLocalizedString("Spatial Span Memory Active Task", comment: "")
-
-            case .Fitness:
-                return NSLocalizedString("Fitness Check Active Task", comment: "")
-
-            case .ShortWalk:
-                return NSLocalizedString("Short Walk Active Task", comment: "")
-
-            case .Audio:
-                return NSLocalizedString("Audio Active Task", comment: "")
-
-            case .ToneAudiometry:
-                return NSLocalizedString("Tone Audiometry Active Task", comment: "")
-
-            case .ReactionTime:
-                return NSLocalizedString("Reaction Time Active Task", comment: "")
+        case .ScaleQuestion:
+            return NSLocalizedString("Scale Question", comment: "")
             
-            case .TowerOfHanoi:
-                return NSLocalizedString("Tower of Hanoi Active Task", comment: "")
-            
-            case .PSAT:
-                return NSLocalizedString("PSAT Active Task", comment: "")
-            
-            case .TimedWalk:
-                return NSLocalizedString("Timed Walk", comment: "")
-            
-            case .HolePegTest:
-                return NSLocalizedString("Hole Peg Test Task", comment: "")
-            
-            case .ImageCapture:
-                return NSLocalizedString("Image Capture Task", comment: "")
+        case .NumericQuestion:
+            return NSLocalizedString("Numeric Question", comment: "")
 
-            case .Survey:
-                return NSLocalizedString("Simple Survey", comment: "")
+        case .TimeOfDayQuestion:
+            return NSLocalizedString("Time of Day Question", comment: "")
+            
+        case .DateQuestion:
+            return NSLocalizedString("Date Question", comment: "")
 
-            case .Consent:
-                return NSLocalizedString("Consent", comment: "")
+        case .DateTimeQuestion:
+            return NSLocalizedString("Date and Time Question", comment: "")
+            
+        case .TimeIntervalQuestion:
+            return NSLocalizedString("Time Interval Question", comment: "")
 
-            case .Form:
-                return NSLocalizedString("Form", comment: "")
+        case .TextQuestion:
+            return NSLocalizedString("Text Question", comment: "")
+            
+        case .ValuePickerChoiceQuestion:
+            return NSLocalizedString("Value Picker Choice Question", comment: "")
+            
+        case .TextChoiceQuestion:
+            return NSLocalizedString("Text Choice Question", comment: "")
+
+        case .ImageChoiceQuestion:
+            return NSLocalizedString("Image Choice Question", comment: "")
+
+        case .BooleanQuestion:
+            return NSLocalizedString("Boolean Question", comment: "")
+
+        case .TwoFingerTappingInterval:
+            return NSLocalizedString("Two Finger Tapping Interval Active Task", comment: "")
+
+        case .SpatialSpanMemory:
+            return NSLocalizedString("Spatial Span Memory Active Task", comment: "")
+
+        case .Fitness:
+            return NSLocalizedString("Fitness Check Active Task", comment: "")
+
+        case .ShortWalk:
+            return NSLocalizedString("Short Walk Active Task", comment: "")
+
+        case .Audio:
+            return NSLocalizedString("Audio Active Task", comment: "")
+
+        case .ToneAudiometry:
+            return NSLocalizedString("Tone Audiometry Active Task", comment: "")
+
+        case .ReactionTime:
+            return NSLocalizedString("Reaction Time Active Task", comment: "")
+        
+        case .TowerOfHanoi:
+            return NSLocalizedString("Tower of Hanoi Active Task", comment: "")
+        
+        case .PSAT:
+            return NSLocalizedString("PSAT Active Task", comment: "")
+        
+        case .TimedWalk:
+            return NSLocalizedString("Timed Walk", comment: "")
+        
+        case .HolePegTest:
+            return NSLocalizedString("Hole Peg Test Task", comment: "")
+        
+        case .ImageCapture:
+            return NSLocalizedString("Image Capture Task", comment: "")
+
+        case .Survey:
+            return NSLocalizedString("Simple Survey", comment: "")
+
+        case .Consent:
+            return NSLocalizedString("Consent", comment: "")
+
+        case .Form:
+            return NSLocalizedString("Form", comment: "")
         }
     }
     
@@ -272,83 +272,83 @@ enum TaskListRow: Int, Printable {
     /// Returns a new `ORKTask` that the `TaskListRow` enumeration represents.
     var representedTask: ORKTask {
         switch self {
-            case .ScaleQuestion:
-                return scaleQuestionTask
+        case .ScaleQuestion:
+            return scaleQuestionTask
 
-            case .NumericQuestion:
-                return numericQuestionTask
-            
-            case .TimeOfDayQuestion:
-                return timeOfDayQuestionTask
+        case .NumericQuestion:
+            return numericQuestionTask
+        
+        case .TimeOfDayQuestion:
+            return timeOfDayQuestionTask
 
-            case .DateQuestion:
-                return dateQuestionTask
-            
-            case .DateTimeQuestion:
-                return dateTimeQuestionTask
-            
-            case .TimeIntervalQuestion:
-                return timeIntervalQuestionTask
-            
-            case .TextQuestion:
-                return textQuestionTask
-            
-            case .ValuePickerChoiceQuestion:
-                return valuePickerChoiceQuestionTask
-            
-            case .TextChoiceQuestion:
-                return textChoiceQuestionTask
-            
-            case .ImageChoiceQuestion:
-                return imageChoiceQuestionTask
-            
-            case .BooleanQuestion:
-                return booleanQuestionTask
-            
-            case .TwoFingerTappingInterval:
-                return twoFingerTappingIntervalTask
-            
-            case .SpatialSpanMemory:
-                return spatialSpanMemoryTask
-            
-            case .Fitness:
-                return fitnessTask
-            
-            case .ShortWalk:
-                return shortWalkTask
-            
-            case .Audio:
-                return audioTask
-            
-            case .ToneAudiometry:
-                return toneAudiometryTask
+        case .DateQuestion:
+            return dateQuestionTask
+        
+        case .DateTimeQuestion:
+            return dateTimeQuestionTask
+        
+        case .TimeIntervalQuestion:
+            return timeIntervalQuestionTask
+        
+        case .TextQuestion:
+            return textQuestionTask
+        
+        case .ValuePickerChoiceQuestion:
+            return valuePickerChoiceQuestionTask
+        
+        case .TextChoiceQuestion:
+            return textChoiceQuestionTask
+        
+        case .ImageChoiceQuestion:
+            return imageChoiceQuestionTask
+        
+        case .BooleanQuestion:
+            return booleanQuestionTask
+        
+        case .TwoFingerTappingInterval:
+            return twoFingerTappingIntervalTask
+        
+        case .SpatialSpanMemory:
+            return spatialSpanMemoryTask
+        
+        case .Fitness:
+            return fitnessTask
+        
+        case .ShortWalk:
+            return shortWalkTask
+        
+        case .Audio:
+            return audioTask
+        
+        case .ToneAudiometry:
+            return toneAudiometryTask
 
-            case .ReactionTime:
-                return reactionTimeTask
-            
-            case .TowerOfHanoi:
-                return towerOfHanoiTask
-            
-            case .PSAT:
-                return PSATTask
-            
-            case .TimedWalk:
-                return TimedWalkTask
-            
-            case .HolePegTest:
-                return holePegTestTask
-            
-            case .ImageCapture:
-                return imageCaptureTask
-            
-            case .Survey:
-                return surveyTask
-            
-            case .Consent:
-                return consentTask
-            
-            case .Form:
-                return formTask
+        case .ReactionTime:
+            return reactionTimeTask
+        
+        case .TowerOfHanoi:
+            return towerOfHanoiTask
+        
+        case .PSAT:
+            return PSATTask
+        
+        case .TimedWalk:
+            return TimedWalkTask
+        
+        case .HolePegTest:
+            return holePegTestTask
+        
+        case .ImageCapture:
+            return imageCaptureTask
+        
+        case .Survey:
+            return surveyTask
+        
+        case .Consent:
+            return consentTask
+        
+        case .Form:
+            return formTask
         }
     }
 
