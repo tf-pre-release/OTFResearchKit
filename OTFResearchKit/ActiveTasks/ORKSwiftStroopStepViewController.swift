@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import OTFResearchKit.Private
 
 public class ORKSwiftStroopStepViewController: ORKActiveStepViewController {
@@ -63,7 +62,8 @@ public class ORKSwiftStroopStepViewController: ORKActiveStepViewController {
     }
     
     private func stroopStep() -> ORKSwiftStroopStep {
-        return step as! ORKSwiftStroopStep
+        guard let stroopStep = step as? ORKSwiftStroopStep else { fatalError("Could not cast to OTFSwiftStroopStep.") }
+        return stroopStep
     }
     
     public override func viewDidLoad() {

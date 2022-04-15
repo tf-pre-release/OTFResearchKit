@@ -30,7 +30,7 @@
 
 
 @import XCTest;
-@import ResearchKit.Private;
+@import OTFResearchKit.Private;
 
 #import "ORKHelpers_Internal.h"
 

@@ -143,13 +143,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self configureStep];
 }
 
 - (void)configureStep {
     ORKdBHLToneAudiometryStep *dBHLTAStep = [self dBHLToneAudiometryStep];
-
+    
     _maxNumberOfTransitionsPerFreq = dBHLTAStep.maxNumberOfTransitionsPerFrequency;
     _freqLoopList = dBHLTAStep.frequencyList;
     _stepUpMissingList = @[ [NSNumber numberWithDouble:dBHLTAStep.dBHLStepUpSizeFirstMiss],
@@ -159,14 +159,14 @@
     _dBHLStepDownSize = dBHLTAStep.dBHLStepDownSize;
     _dBHLStepUpSize = dBHLTAStep.dBHLStepUpSize;
     _dBHLMinimumThreshold = dBHLTAStep.dBHLMinimumThreshold;
-
+    
     self.dBHLToneAudiometryContentView = [[ORKdBHLToneAudiometryContentView alloc] init];
     self.activeStepView.activeCustomView = self.dBHLToneAudiometryContentView;
     self.activeStepView.customContentFillsAvailableSpace = YES;
     [self.activeStepView.navigationFooterView setHidden:YES];
-
+    
     [self.dBHLToneAudiometryContentView.tapButton addTarget:self action:@selector(tapButtonPressed) forControlEvents:UIControlEventTouchDown];
-
+    
     _audioChannel = [self dBHLToneAudiometryStep].earPreference;
     _audioGenerator = [[ORKdBHLToneAudiometryAudioGenerator alloc] initForHeadphones:[self dBHLToneAudiometryStep].headphoneType];
     _audioGenerator.delegate = self;
@@ -244,7 +244,7 @@
     [super start];
     [self estimatedBHLAndPlayToneWithFrequency:_freqLoopList[_indexOfFreqLoopList]];
 }
-    
+
 - (void)stopAudio {
     [_audioGenerator stop];
     if (_preStimulusDelayWorkBlock) {
@@ -268,7 +268,7 @@
         _transitionsDictionary = nil;
         _transitionsDictionary = [NSMutableDictionary dictionary];
         if (_resultSample) {
-           _resultSample.units = [_arrayOfResultUnits copy];
+            _resultSample.units = [_arrayOfResultUnits copy];
         }
         _arrayOfResultUnits = [NSMutableArray array];
         _prevFreq = [freq doubleValue];
@@ -316,45 +316,45 @@
     _resultUnit.preStimulusDelay = preStimulusDelay;
     
     _preStimulusDelayWorkBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
-        [_audioGenerator playSoundAtFrequency:[freq floatValue] onChannel:_audioChannel dBHL:_currentdBHL];
+        [self->_audioGenerator playSoundAtFrequency:[freq floatValue] onChannel:self->_audioChannel dBHL:self->_currentdBHL];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(preStimulusDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), _preStimulusDelayWorkBlock);
     
     _pulseDurationWorkBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
-        [_audioGenerator stop];
+        [self->_audioGenerator stop];
     });
     // adding 0.2 seconds to account for the fadeInDuration which is being set in ORKdBHLToneAudiometryAudioGenerator
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((preStimulusDelay + toneDuration + 0.2) * NSEC_PER_SEC)), dispatch_get_main_queue(), _pulseDurationWorkBlock);
-
+    
     ORKWeakTypeOf(self)weakSelf = self;
     _postStimulusDelayWorkBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
         ORKStrongTypeOf(self) strongSelf = weakSelf;
-        NSUInteger storedTestIndex = _currentTestIndex;
-        if (_currentTestIndex == storedTestIndex) {
-            if (_initialDescent && _ackOnce) {
-                _initialDescent = NO;
+        NSUInteger storedTestIndex = self->_currentTestIndex;
+        if (self->_currentTestIndex == storedTestIndex) {
+            if (self->_initialDescent && self->_ackOnce) {
+                self->_initialDescent = NO;
                 ORKdBHLToneAudiometryTransitions *newTransition = [[ORKdBHLToneAudiometryTransitions alloc] init];
                 newTransition.userInitiated -= 1;
-                [_transitionsDictionary setObject:newTransition forKey:[NSNumber numberWithFloat:_currentdBHL]];
+                [self->_transitionsDictionary setObject:newTransition forKey:[NSNumber numberWithFloat:self->_currentdBHL]];
             }
-            if (_usingMissingList && (_indexOfStepUpMissingList < _stepUpMissingList.count)) {
-                _currentdBHL = _currentdBHL + [_stepUpMissingList[_indexOfStepUpMissingList] doubleValue];
-                _indexOfStepUpMissingList = _indexOfStepUpMissingList + 1;
+            if (self->_usingMissingList && (self->_indexOfStepUpMissingList < self->_stepUpMissingList.count)) {
+                self->_currentdBHL = self->_currentdBHL + [self->_stepUpMissingList[self->_indexOfStepUpMissingList] doubleValue];
+                self->_indexOfStepUpMissingList = self->_indexOfStepUpMissingList + 1;
             } else {
-                _usingMissingList = NO;
-                _currentdBHL = _currentdBHL + _dBHLStepUpSize;
+                self->_usingMissingList = NO;
+                self->_currentdBHL = self->_currentdBHL + self->_dBHLStepUpSize;
             }
             if (currentTransition) {
                 currentTransition.userInitiated -= 1;
             }
-            _resultUnit.timeoutTimeStamp = self.runtime;
-            _currentTestIndex += 1;
-            [strongSelf estimatedBHLAndPlayToneWithFrequency:_freqLoopList[_indexOfFreqLoopList]];
+            self->_resultUnit.timeoutTimeStamp = self.runtime;
+            self->_currentTestIndex += 1;
+            [strongSelf estimatedBHLAndPlayToneWithFrequency:self->_freqLoopList[self->_indexOfFreqLoopList]];
             return;
         }
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((preStimulusDelay + toneDuration + postStimulusDelay) * NSEC_PER_SEC)), dispatch_get_main_queue(), _postStimulusDelayWorkBlock);
-
+    
 }
 
 - (void)tapButtonPressed {
@@ -387,7 +387,7 @@
         _usingMissingList = NO;
         _currentdBHL = _currentdBHL - _dBHLStepDownSize;
     }
-
+    
     [self estimatedBHLAndPlayToneWithFrequency:_freqLoopList[_indexOfFreqLoopList]];
     return;
 }

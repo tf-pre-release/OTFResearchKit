@@ -136,7 +136,7 @@ static CGFloat const kForgotPasscodeHeight              = 100.0f;
                                      action:@selector(forgotPasscodeTapped)
                            forControlEvents:UIControlEventTouchUpInside];
             
-            [self.view addSubview:forgotPasscodeButton];            
+            [self.view addSubview:forgotPasscodeButton];
             _forgotPasscodeButton = forgotPasscodeButton;
         }
         
@@ -419,7 +419,7 @@ static CGFloat const kForgotPasscodeHeight              = 100.0f;
                 
                 if (success) {
                     // Store that user passed authentication.
-                    _isTouchIdAuthenticated = YES;
+                    self->_isTouchIdAuthenticated = YES;
                     
                     // Send a delegate callback for authentication flow.
                     if ([strongSelf passcodeStep].passcodeFlow == ORKPasscodeFlowAuthenticate) {
@@ -796,7 +796,7 @@ static CGFloat const kForgotPasscodeHeight              = 100.0f;
     double animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     [UIView animateWithDuration:animationDuration animations:^{
-        [_forgotPasscodeButton setFrame:CGRectMake(_forgotPasscodeButton.frame.origin.x, _originalForgotPasscodeY - keyboardHeight, _forgotPasscodeButton.frame.size.width, _forgotPasscodeButton.frame.size.height)];
+        [self->_forgotPasscodeButton setFrame:CGRectMake(self->_forgotPasscodeButton.frame.origin.x, self->_originalForgotPasscodeY - keyboardHeight, self->_forgotPasscodeButton.frame.size.width, self->_forgotPasscodeButton.frame.size.height)];
     }];
 }
 
@@ -805,7 +805,7 @@ static CGFloat const kForgotPasscodeHeight              = 100.0f;
     double animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
     [UIView animateWithDuration:animationDuration animations:^{
-         [_forgotPasscodeButton setFrame:CGRectMake(_forgotPasscodeButton.frame.origin.x, _originalForgotPasscodeY, _forgotPasscodeButton.frame.size.width, _forgotPasscodeButton.frame.size.height)];
+         [self->_forgotPasscodeButton setFrame:CGRectMake(self->_forgotPasscodeButton.frame.origin.x, self->_originalForgotPasscodeY, self->_forgotPasscodeButton.frame.size.width, self->_forgotPasscodeButton.frame.size.height)];
      }];
 }
 

@@ -114,16 +114,16 @@ static NSUInteger const QueryLimitSize = 1000;
         if (shouldContinue) {
             // _currentAnchor will be NSNotFound on the first pass of the operation
 #if HEALTH
-            if (_currentAnchor != nil) {
+            if (self->_currentAnchor != nil) {
                 changed = YES;
                 // Update the anchor if we have one
-                _collector.lastAnchor = [_currentAnchor copy];
+                self->_collector.lastAnchor = [self->_currentAnchor copy];
             }
             
-            lastAnchor = _collector.lastAnchor;
-            sampleType = _collector.sampleType;
-            startDate = _collector.startDate;
-            itemIdentifier = _collector.identifier;
+            lastAnchor = self->_collector.lastAnchor;
+            sampleType = self->_collector.sampleType;
+            startDate = self->_collector.startDate;
+            itemIdentifier = self->_collector.identifier;
 #endif
         }
         
@@ -162,7 +162,7 @@ static NSUInteger const QueryLimitSize = 1000;
                                                                         ORKHealthSampleQueryOperation *op = weakSelf;
                                                                         ORK_Log_Debug("\nHK Query returned: %@\n", @{@"sampleType": sampleType, @"items":@([sampleObjects count]), @"newAnchor":[newAnchor description]?:@"nil"});
                                                                         // Signal that query returned
-                                                                        dispatch_semaphore_signal(_sem);
+                                                                        dispatch_semaphore_signal(self->_sem);
                                                                         [op handleResults:sampleObjects newAnchor:newAnchor error:error itemIdentifier:itemIdentifier];
                                                                  }];
 
@@ -175,7 +175,7 @@ static NSUInteger const QueryLimitSize = 1000;
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC));
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        if (dispatch_semaphore_wait(_sem, timeout)) {
+        if (dispatch_semaphore_wait(self->_sem, timeout)) {
             [self timeoutForAnchor:anchor];
         }
     });
@@ -221,7 +221,7 @@ static NSUInteger const QueryLimitSize = 1000;
     [self.lock unlock];
     
     BOOL doContinue = (results && [results count] > 0);
-    if (doContinue) {        
+    if (doContinue) {
          id<ORKDataCollectionManagerDelegate> delegate = _manager.delegate;
         
         BOOL handoutSuccess = NO;

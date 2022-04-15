@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 internal class ORKSwiftStroopContentView: ORKActiveStepCustomView {
     
     public var colorLabelText: String?

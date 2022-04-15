@@ -102,4 +102,3 @@ internal class TrackLayer: CAShapeLayer {
         ctx.fillPath()
     }
 }
-

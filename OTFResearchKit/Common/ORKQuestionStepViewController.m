@@ -453,7 +453,7 @@ static const CGFloat DelayBeforeAutoScroll = 0.25;
     [_defaultSource fetchDefaultValueForAnswerFormat:[[self questionStep] answerFormat] handler:^(id defaultValue, NSError *error) {
         if (defaultValue != nil || error == nil) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                _defaultAnswer = defaultValue;
+                self->_defaultAnswer = defaultValue;
                 [self defaultAnswerDidChange];
             });
         } else {

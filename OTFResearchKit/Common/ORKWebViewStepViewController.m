@@ -163,9 +163,9 @@ static const CGFloat ORKSignatureTopPadding = 37.0;
     if (_constraints) {
         [NSLayoutConstraint deactivateConstraints:_constraints];
     }
-
+    
     UIView *viewForiPad = [self viewForiPadLayoutConstraints];
-
+    
     _constraints = nil;
     _webView.translatesAutoresizingMaskIntoConstraints = NO;
     _navigationFooterView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -329,10 +329,10 @@ static const CGFloat ORKSignatureTopPadding = 37.0;
     if (offset < 0) {
         CGFloat xOffset = _scrollView.contentOffset.x;
         CGFloat yOffset = _scrollView.contentOffset.y - offset;
-    
+        
         if (animated) {
             [UIView animateWithDuration:0.2 animations:^{
-                [_scrollView setContentOffset:CGPointMake(xOffset, yOffset)];
+                [self->_scrollView setContentOffset:CGPointMake(xOffset, yOffset)];
             }];
         } else {
             [_scrollView setContentOffset:CGPointMake(xOffset, yOffset)];
@@ -408,16 +408,16 @@ static const CGFloat ORKSignatureTopPadding = 37.0;
                 if (result != nil) {
                     NSString *resultString = [NSString stringWithFormat:@"%@", result];
                     CGFloat height = [resultString floatValue];
-                    [_webView.heightAnchor constraintEqualToConstant:height].active = YES;
+                    [self->_webView.heightAnchor constraintEqualToConstant:height].active = YES;
                 }
                 
-                if (_webViewDelegate != nil && [_webViewDelegate respondsToSelector:@selector(didFinishLoadingWebStepViewController:)]) {
-                    [_webViewDelegate didFinishLoadingWebStepViewController:self];
+                if (self->_webViewDelegate != nil && [self->_webViewDelegate respondsToSelector:@selector(didFinishLoadingWebStepViewController:)]) {
+                    [self->_webViewDelegate didFinishLoadingWebStepViewController:self];
                 }
             }];
         } else {
-            if (_webViewDelegate != nil && [_webViewDelegate respondsToSelector:@selector(didFinishLoadingWebStepViewController:)]) {
-                [_webViewDelegate didFinishLoadingWebStepViewController:self];
+            if (self->_webViewDelegate != nil && [self->_webViewDelegate respondsToSelector:@selector(didFinishLoadingWebStepViewController:)]) {
+                [self->_webViewDelegate didFinishLoadingWebStepViewController:self];
             }
         }
     }];

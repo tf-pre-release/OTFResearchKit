@@ -115,48 +115,48 @@ static const CGFloat CircleLineWidth = 6.0;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSNumber *presentationLayerValue;
-            if (![_circleLayer.presentationLayer animationForKey:@"strokeStart"]) {
+            if (![self->_circleLayer.presentationLayer animationForKey:@"strokeStart"]) {
                 presentationLayerValue = @(1.0 - oldValue);
             } else {
-                presentationLayerValue = [_circleLayer.presentationLayer valueForKey:@"strokeStart"];
-                [_circleLayer removeAllAnimations];
+                presentationLayerValue = [self->_circleLayer.presentationLayer valueForKey:@"strokeStart"];
+                [self->_circleLayer removeAllAnimations];
             }
             
             NSUUID *caid = [NSUUID UUID];
-            _transactionID = caid;
+            self->_transactionID = caid;
             
             [CATransaction begin];
             
-            [_circleLayer removeFromSuperlayer];
-            _circleLayer = [self createShapeLayer];
-            _circleLayer.lineWidth = CircleLineWidth;
-            _circleLayer.strokeColor = UIColor.systemGrayColor.CGColor;
-            [self.layer addSublayer:_circleLayer];
+            [self->_circleLayer removeFromSuperlayer];
+            self->_circleLayer = [self createShapeLayer];
+            self->_circleLayer.lineWidth = CircleLineWidth;
+            self->_circleLayer.strokeColor = UIColor.systemGrayColor.CGColor;
+            [self.layer addSublayer:self->_circleLayer];
             
             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
             animation.fromValue = @([presentationLayerValue doubleValue]);
             animation.toValue = @(1.0 - value);
             animation.beginTime = 0.0;
-            animation.duration = _animationDuration;
+            animation.duration = self->_animationDuration;
             animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             animation.fillMode = kCAFillModeBoth;
             animation.removedOnCompletion = NO;
             
             [CATransaction setCompletionBlock:^{
-                if([caid isEqual:_transactionID]){
-                    if (_value == ORKRingViewMinimumValue) {
-                        [_circleLayer removeFromSuperlayer];
+                if([caid isEqual:self->_transactionID]){
+                    if (self->_value == ORKRingViewMinimumValue) {
+                        [self->_circleLayer removeFromSuperlayer];
                     }
                     else {
-                        _circleLayer.strokeColor = _color.CGColor;
-                        if (_value == ORKRingViewMaximumValue && self.delegate && [self.delegate respondsToSelector:@selector(ringViewDidFinishFillAnimation)]) {
+                        self->_circleLayer.strokeColor = self->_color.CGColor;
+                        if (self->_value == ORKRingViewMaximumValue && self.delegate && [self.delegate respondsToSelector:@selector(ringViewDidFinishFillAnimation)]) {
                             [self.delegate ringViewDidFinishFillAnimation];
                         }
                     }
                 }
             }];
             
-            [_circleLayer addAnimation:animation forKey:animation.keyPath];
+            [self->_circleLayer addAnimation:animation forKey:animation.keyPath];
             [CATransaction commit];
         });
         

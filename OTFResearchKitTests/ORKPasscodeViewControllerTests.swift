@@ -30,7 +30,6 @@
 
 import XCTest
 @testable import OTFResearchKit
-import OTFResearchKit.Private
 
 class ORKPasscodeViewControllerTests: XCTestCase {
     
@@ -42,7 +41,6 @@ class ORKPasscodeViewControllerTests: XCTestCase {
         testController = ORKPasscodeViewController.passcodeAuthenticationViewController(withText: "TEST", delegate: self)
         XCTAssertEqual(testController.navigationBar.isTranslucent, false)
         XCTAssert(testController.navigationBar.shadowImage != nil)
-        
         
         guard let stepViewController = testController.viewControllers.first as? ORKPasscodeStepViewController,
             let step = stepViewController.step as? ORKPasscodeStep else {
@@ -109,7 +107,6 @@ class ORKPasscodeViewControllerTests: XCTestCase {
                 XCTFail("waitForExpectationWithTimeout error: \(error)")
             }
         }
-        
         
         testExpectation = expectation(description: "ORKPasscodeViewController calls the delegate as the result of user forgetting passcode")
         self.asyncExpectation = testExpectation

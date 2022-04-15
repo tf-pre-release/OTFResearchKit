@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import UIKit
 
 class RootViewController: UIViewController, OnboardingManagerDelegate {
@@ -95,5 +94,3 @@ public extension UIImage {
         self.init(cgImage: cgImage)
     }
 }
-
-

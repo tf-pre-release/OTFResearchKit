@@ -265,14 +265,14 @@
         CGFloat visibleHeight = bounds.size.height - intersectionSize.height;
         
         // Keep track of the keyboard overlap, so we can adjust the constraint properly.
-        _keyboardOverlap = intersectionSize.height;
+        self->_keyboardOverlap = intersectionSize.height;
         
         // Trigger layout inside the animation block to get the constraint change to animate.
         [self layoutIfNeeded];
         
-        if (_keyboardIsUp) {
+        if (self->_keyboardIsUp) {
             
-            CGFloat contentMaxY = CGRectGetMaxY([self convertRect:_container.bounds fromView:_container]);
+            CGFloat contentMaxY = CGRectGetMaxY([self convertRect:self->_container.bounds fromView:self->_container]);
             
             // First compute the contentOffset.y that would make the continue and skip buttons visible
             CGFloat yOffset = MAX(contentMaxY - visibleHeight, 0);
@@ -280,7 +280,7 @@
             
             // If that yOffset would not make the stepView visible, override to align with the top of the stepView.
             CGRect potentialVisibleRect = (CGRect){{0,yOffset},{bounds.size.width,visibleHeight}};
-            CGRect targetBounds = [self convertRect:_stepView.bounds fromView:_stepView];
+            CGRect targetBounds = [self convertRect:self->_stepView.bounds fromView:self->_stepView];
             if (!CGRectContainsRect(potentialVisibleRect, targetBounds)) {
                 yOffset = targetBounds.origin.y;
             }
@@ -334,7 +334,7 @@
     if (_stepViewCenterInStepViewContainerConstraint) {
         BOOL offsetCentering = !(hasIllustration || hasCaption || hasInstruction || hasLearnMore);
         _stepViewCenterInStepViewContainerConstraint.active = offsetCentering;
-    }    
+    }
 }
 
 - (void)updateLayoutMargins {
@@ -345,7 +345,7 @@
     _container.layoutMargins = layoutMargins;
 }
 
-- (void)updateConstraintConstantsForWindow:(UIWindow *)window {    
+- (void)updateConstraintConstantsForWindow:(UIWindow *)window {
     {
         BOOL hasIllustration = (_imageView.image != nil);
         _headerView.hasContentAbove = hasIllustration;

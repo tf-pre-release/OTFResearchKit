@@ -123,4 +123,3 @@ public extension UIDevice {
         return false
     }
 }
-

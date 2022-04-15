@@ -42,6 +42,7 @@
 
 @implementation ORKHKSampleTests
 
+#if defined HEALTH || defined CAREHEALTH
 - (void)testHKSampleSerialization {
     NSDate *d1 = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
     NSDate *d2 = [NSDate dateWithTimeInterval:10 sinceDate:d1];
@@ -107,5 +108,6 @@
     XCTAssertTrue([dict[@"objects"] containsObject:dd], @"");
     XCTAssertTrue([dict[@"objects"] containsObject:ds], @"");
 }
+#endif
 
 @end

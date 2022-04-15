@@ -295,10 +295,9 @@
 
 - (void)setDistanceInMeters:(double)distanceInMeters {
     _distanceInMeters = distanceInMeters;
-    double displayDistance = _distanceInMeters;
     NSString *distanceString = nil;
     NSLengthFormatterUnit unit;
-    NSString *unitString = [_lengthFormatter unitStringFromMeters:displayDistance usedUnit:&unit];
+    NSString *unitString = [_lengthFormatter unitStringFromMeters:distanceInMeters usedUnit:&unit];
     
     switch (unit) {
         case NSLengthFormatterUnitCentimeter:
@@ -306,7 +305,7 @@
             unit = NSLengthFormatterUnitMeter;
             // Force showing 0 meters if the distance is sufficiently short to be displayed in cm or mm
             unitString = [_lengthFormatter unitStringFromValue:0 unit:NSLengthFormatterUnitMeter];
-            displayDistance = 0;
+            distanceInMeters = 0;
             break;
         default:
             break;
@@ -321,7 +320,7 @@
         hkUnit = [HKUnit footUnit];
         conversionFactor = 1.0 / 3.0;
     }
-    HKQuantity *quantity = [HKQuantity quantityWithUnit:[HKUnit meterUnit] doubleValue:displayDistance];
+    HKQuantity *quantity = [HKQuantity quantityWithUnit:[HKUnit meterUnit] doubleValue:distanceInMeters];
     distanceString = [_lengthFormatter.numberFormatter stringFromNumber:@([quantity doubleValueForUnit:hkUnit]*conversionFactor)];
 #endif
     [self distanceView].title = [NSString localizedStringWithFormat:ORKLocalizedString(@"FITNESS_DISTANCE_TITLE_FORMAT", nil), unitString];

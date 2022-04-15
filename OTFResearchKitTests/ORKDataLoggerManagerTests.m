@@ -30,7 +30,7 @@
 
 
 @import XCTest;
-@import ResearchKit.Private;
+@import OTFResearchKit.Private;
 
 
 @interface ORKDataLoggerManagerTests : XCTestCase <ORKDataLoggerManagerDelegate> {

@@ -28,12 +28,22 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@import Foundation;
+
 #import <OTFResearchKit/ORKDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class ORKHealthKitPermissionType;
+@class ORKNotificationPermissionType;
+@class ORKMotionActivityPermissionType;
 @class ORKRequestPermissionView;
+
+#if HEALTH
+@class HKSampleType, HKObjectType;
+#endif
+
+typedef NS_OPTIONS(NSUInteger, UNAuthorizationOptions);
 
 ORK_CLASS_AVAILABLE
 @interface ORKPermissionType : NSObject
@@ -45,6 +55,10 @@ ORK_CLASS_AVAILABLE
                                                             objectTypesToRead:(nullable NSSet<HKObjectType *> *)objectTypesToRead;
 
 #endif
+
++ (ORKNotificationPermissionType *)notificationPermissionType:(UNAuthorizationOptions)options;
+
++ (ORKMotionActivityPermissionType *)deviceMotionPermissionType;
 
 @end
 

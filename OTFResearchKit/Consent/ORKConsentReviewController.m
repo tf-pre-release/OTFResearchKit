@@ -228,16 +228,16 @@ static const CGFloat iPadStepTitleLabelFontSize = 50.0;
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *) __unused navigation {
     //need a delay here because of a race condition where the webview may not have fully rendered by the time this is called in which case scrolledToBottom returns YES because everything == 0
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (!_agreeButton.isEnabled && [self scrolledToBottom:_webView.scrollView]) {
-            [_agreeButton setEnabled:YES];
+        if (!self->_agreeButton.isEnabled && [self scrolledToBottom:self->_webView.scrollView]) {
+            [self->_agreeButton setEnabled:YES];
         }
     });
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (!_agreeButton.isEnabled && [self scrolledToBottom:scrollView]) {
-            _agreeButton.enabled = YES;
+        if (!self->_agreeButton.isEnabled && [self scrolledToBottom:scrollView]) {
+            self->_agreeButton.enabled = YES;
         }
     });
 }

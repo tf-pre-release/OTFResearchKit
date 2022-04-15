@@ -28,7 +28,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 import UIKit
 
 enum Colors {
@@ -86,4 +85,3 @@ enum Colors {
         }
     }
 }
-

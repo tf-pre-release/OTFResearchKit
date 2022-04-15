@@ -28,18 +28,32 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if HEALTH
 #import "ORKHealthKitPermissionType.h"
+#endif
+
+#import "ORKNotificationPermissionType.h"
+#import "ORKMotionActivityPermissionType.h"
 #import "ORKHelpers_Internal.h"
 #import "ORKPermissionType.h"
 
 @implementation ORKPermissionType
 
 #if HEALTH
- + (ORKHealthKitPermissionType *)healthKitPermissionTypeWithSampleTypesToWrite:(NSSet<HKSampleType *> *)sampleTypesToWrite objectTypesToRead:(NSSet<HKObjectType *> *)objectTypesToRead {
-     return [[ORKHealthKitPermissionType alloc] initWithSampleTypesToWrite:sampleTypesToWrite
++ (ORKHealthKitPermissionType *)healthKitPermissionTypeWithSampleTypesToWrite:(NSSet<HKSampleType *> *)sampleTypesToWrite objectTypesToRead:(NSSet<HKObjectType *> *)objectTypesToRead {
+    return [[ORKHealthKitPermissionType alloc] initWithSampleTypesToWrite:sampleTypesToWrite
                                                          objectTypesToRead:objectTypesToRead];
- }
+}
 #endif
 
++ (ORKNotificationPermissionType *)notificationPermissionType:(UNAuthorizationOptions)options {
+    return [[ORKNotificationPermissionType alloc] initWithAuthorizationOptions:options];
+}
+
++ (ORKMotionActivityPermissionType *)deviceMotionPermissionType {
+    return [[ORKMotionActivityPermissionType alloc] init];
+}
+
 @end
+
 

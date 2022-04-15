@@ -170,10 +170,10 @@
     ORKVisualConsentAnimationContext *animationContext = (__bridge ORKVisualConsentAnimationContext *)context;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (([keyPath isEqualToString:@"status"] && object == _moviePlayer) ||
-            ([keyPath isEqualToString:@"duration"] && object == _playerItem)) {
-            if (_moviePlayer.error) {
-                ORK_Log_Error("%@", _moviePlayer.error);
+        if (([keyPath isEqualToString:@"status"] && object == self->_moviePlayer) ||
+            ([keyPath isEqualToString:@"duration"] && object == self->_playerItem)) {
+            if (self->_moviePlayer.error) {
+                ORK_Log_Error("%@", self->_moviePlayer.error);
             }
             
             [self attemptAnimationWithContext:animationContext];
@@ -204,9 +204,9 @@
     __weak AVPlayer *weakPlayer = _moviePlayer;
     [_moviePlayer seekToTime:context.startTime.CMTimeValue
              toleranceBefore:CMTimeMake(NSEC_PER_SEC * (1.0 / 60.0), NSEC_PER_SEC) toleranceAfter:CMTimeMake(NSEC_PER_SEC * (1.0 / 60.0), NSEC_PER_SEC)  completionHandler:^(BOOL finished) {
-                 AVPlayer *localPlayer = weakPlayer;
-                 [localPlayer play];
-             }];
+        AVPlayer *localPlayer = weakPlayer;
+        [localPlayer play];
+    }];
 }
 
 - (void)finishAnimationWithContext:(ORKVisualConsentAnimationContext *)context {

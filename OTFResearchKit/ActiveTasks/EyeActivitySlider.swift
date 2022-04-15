@@ -178,4 +178,3 @@ internal class EyeActivitySlider: UIView {
         return (outcome, currentLetterAngle, currentSliderValue, score, incorrectAnswers, maxScore)
     }
 }
-

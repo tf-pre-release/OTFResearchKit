@@ -280,4 +280,3 @@ open class CircleSlider: UISlider {
         return Math.pointFromAngle(frame, angle: degree, radius: Double(radius))
     }
 }
-
